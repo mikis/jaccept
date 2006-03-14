@@ -1,0 +1,13 @@
+Contains functionality for extending the JUnit framework with more advanced interactions during test runs. <p>
+The structure of the test set should be as follows:
+
+<ul>
+<li>The <code>TestRunner</code> should start on a static instance of the <code>RootLevelSuite</code> defining the
+top level suite. This corresponds to a top level JUnit TestSuite staticly returning a TestSuite instance.
+<li>The RootLevelSuite should return a set of IntermediateLevelSuite's in it's suite methods.
+This corresponds to second level JUnit TestSuite staticly returning a TestSuite instance..
+<li>A IntermediateLevelSuite should return a set of CaseLevelSuite's in it's suite methods. This corresponds to a normal
+JUnit static call to a set of TestCases which returns their TestSuites.
+<li>A CaseLevelSuite is composed of of a number of TestCase instances, each representing a single test.
+<li>Each test is composed of a number test steps typically corresponding to a stimuli performed on the system.
+</ul>

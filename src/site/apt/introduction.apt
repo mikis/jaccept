@@ -1,0 +1,66 @@
+ -----
+ Jaccept introduction
+ -----
+ -----
+
+Purpose
+
+ Jaccept is a extension to JUnit adding possibility of increased test information and control. 
+ 
+ Application testing are usually segmented into to types: 
+ 
+  [[1]] Unittesting: Automatic, classlevel, API testing with very little or no description of the tests. 
+ 
+  [[1]] Systemtest: Manual, systemlevel, GUI test with a high degree of test description. 
+  These are also typically used for acceptance testing.
+ 
+ The purpose of Jaccept is to extend the Junit testframework with features normally only found in the systemtest.
+ 
+  * Possibility of specifing test information on suite/testcase/test/teststep level.
+  
+  * Controlling the progress of the test execution enabling manual interactions.
+  
+  * Increased monitoring of the test execution.
+  
+  * Initially writing description-only tests, without any functionality (testspecification), later adding testcode.
+  
+ One of the consequences of Jaccepts exposure of test execution and thereby application interaction, 
+ is that it is well suited for demonstrating application interactions which may othervise be difficult to visualize. 
+   
+Design
+ 
+ The test execution is monitored and controlled by a central testmanager, which may also collect addditional 
+ information from other testframework components, testfacades, systemlistener etc.
+ 
+ The TestManager functions as a meditor between the running tests, and any components interested in monitoring or 
+ controlling the test execution (Test clients). 
+ 
+[images/overview.png] TestGUI
+ 
+Clients 
+ 
+ The testmanager exposes an interface for accessing these information/control features. Currently 2 clients are included which use this interface.
+ 
+* TestGUI
+
+ Graphical representation of the features exposed by the TestManager. 
+
+[images/screenshot.png] TestGUI
+ 
+ This allows the tester to:
+ 
+  * Select whether teststimuli should be automatically generated. 
+  
+  * Select whether testvalidating should be automatically performed.   
+ 
+  * Displays specified teststimuli/results
+ 
+  * Displays information from other testframework hooks, dumps of system input/output/logs etc.
+ 
+* Reportgenerator
+
+ Compiles the generated information collected during the test run into testspecifications or testresultreports.
+ 
+
+   
+

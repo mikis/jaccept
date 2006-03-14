@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>jaccept</groupId>
+  <artifactId>root</artifactId>
+  <packaging>pom</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>Jaccept</name>
+  <description>JUnit extension providing acceptence test capabilities</description>
+  <url>http://jaccept.sourceforge.net</url>
+  <issueManagement>
+      	<system>Sourceforge</system>      	
+  </issueManagement>
+  <mailingLists>
+  </mailingLists>
+  <developers>
+      <developer>
+        <id>mikis</id>
+        <name>Mikis Seth Sorensen</name>
+        <email>mikisseth@sourceforge.org</email>
+        <timezone>+1</timezone>
+        <roles>
+           <role>
+        	PMC Chair
+           </role>
+        </roles>
+      </developer>
+  </developers>
+  <licenses>
+      <license>
+      	<name>Common Public License - v 1.0</name>
+      	<url>http://www.eclipse.org/legal/cpl-v10.html</url>
+        <distribution>manual</distribution>
+      </license>
+  </licenses>
+  <scm>
+      <connection>scm:svn:http://svn.sourceforge.net:/cvsroot/jaccept/trunk</connection>
+      <developerConnection>scm:svn:https://svn.sourceforge.net:/cvsroot/jaccept/trunk</developerConnection>
+      <url>http://svn.sourceforge.net/viewcvs.py/jaccept//trunk</url>
+  </scm>
+  <modules>
+	<module>jaccept-core</module>
+	<module>jaccept-gui</module>
+  </modules>
+  <reporting>
+	<plugins>
+              <plugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-project-info-reports-plugin</artifactId>
+               </plugin>
+           </plugins>
+  </reporting>
+</project>

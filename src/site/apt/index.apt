@@ -1,0 +1,15 @@
+ -----
+ The Jaccept Site
+ -----
+ The Jaccept Team
+ -----
+
+Welcome to Jaccept
+
+ The Jaccept framework is an extension to the JUnit providing features needed for acceptancetesting. This includes:
+
+ * Graphical frontend for controlling test executing and monitoring.
+ 
+ * Generation of testreports & testspecification.
+ 
+ * Adding testdocumentation directly in the testcode. 
