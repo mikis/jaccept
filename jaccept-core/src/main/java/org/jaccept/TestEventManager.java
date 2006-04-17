@@ -4,28 +4,31 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 public class TestEventManager {
-    private static final List aListerners = new LinkedList();
+    private static final List listerners = new LinkedList();
     private static final TestEventManager instance = new TestEventManager();    
-    private static boolean aIsBlocking = false;
-    private static int aStepCounter = 0;
-    private static boolean aFailed = false;
+    private static boolean isBlocking = false;
+    private static int stepCounter = 0;
+    private static boolean failed = false;
 
     private static boolean aVerificationEnabled = true;
+    private final Logger log = Logger.getLogger(TestEventManager.class);
 
     
     private TestEventManager(){}
 
     public static void addTestListener(TestEventListener listener) {
-        aListerners.add(listener);
+        listerners.add(listener);
     }
 
     public static void removeTestListener(TestEventListener listener){
-        aListerners.remove(listener);
+        listerners.remove(listener);
     }
     
     public void addProject(String name){
-        Iterator listenerIterator = aListerners.iterator();
+        Iterator listenerIterator = listerners.iterator();
         while (listenerIterator.hasNext()) {
             TestEventListener testListener = (TestEventListener) listenerIterator.next();
             testListener.projectStarted(name);
@@ -33,7 +36,7 @@ public class TestEventManager {
     }
 
     public void addSuite(String name) {
-        Iterator listenerIterator = aListerners.iterator();
+        Iterator listenerIterator = listerners.iterator();
         while (listenerIterator.hasNext()) {
             TestEventListener testListener = (TestEventListener) listenerIterator.next();
             testListener.suiteStarted(name);
@@ -41,7 +44,7 @@ public class TestEventManager {
     }
 
     public void addCase(String name) {
-        Iterator listenerIterator = aListerners.iterator();
+        Iterator listenerIterator = listerners.iterator();
         while (listenerIterator.hasNext()) {
             TestEventListener testListener = (TestEventListener) listenerIterator.next();
             testListener.caseStarted(name);
@@ -49,8 +52,8 @@ public class TestEventManager {
     }
 
     public void addTest(String name) {
-        aStepCounter = 0;
-        Iterator listenerIterator = aListerners.iterator();
+        stepCounter = 0;
+        Iterator listenerIterator = listerners.iterator();
         while (listenerIterator.hasNext()) {
             TestEventListener testListener = (TestEventListener) listenerIterator.next();
             testListener.testStarted(name);
@@ -59,7 +62,7 @@ public class TestEventManager {
     
     public void addTestEnded() {
         addStepEnd();
-        Iterator listenerIterator = aListerners.iterator();
+        Iterator listenerIterator = listerners.iterator();
         while (listenerIterator.hasNext()) {
             TestEventListener testListener = (TestEventListener) listenerIterator.next();
             testListener.testEnded();
@@ -67,9 +70,9 @@ public class TestEventManager {
     }
 
     public void addStep(String stimuli, String expectedResult) {
-        if (aStepCounter > 0) addStepEnd();
-        aStepCounter++;
-        Iterator listenerIterator = aListerners.iterator();
+        if (stepCounter > 0) addStepEnd();
+        stepCounter++;
+        Iterator listenerIterator = listerners.iterator();
         while (listenerIterator.hasNext()) {
             TestEventListener testListener = (TestEventListener) listenerIterator.next();
             testListener.stepStarted(stimuli, expectedResult);
@@ -77,7 +80,7 @@ public class TestEventManager {
     }
     
     public void addStepEnd() {
-        Iterator listenerIterator = aListerners.iterator();
+        Iterator listenerIterator = listerners.iterator();
         while (listenerIterator.hasNext()) {
             TestEventListener testListener = (TestEventListener) listenerIterator.next();
             testListener.stepEnded();
@@ -85,7 +88,7 @@ public class TestEventManager {
     }
     
     public void addDescription(String description) {
-        Iterator listenerIterator = aListerners.iterator();
+        Iterator listenerIterator = listerners.iterator();
         while (listenerIterator.hasNext()) {
             TestEventListener testListener = (TestEventListener) listenerIterator.next();
             testListener.description(description);
@@ -93,7 +96,7 @@ public class TestEventManager {
     }
     
     public void addReference(String reference) {
-        Iterator listenerIterator = aListerners.iterator();
+        Iterator listenerIterator = listerners.iterator();
         while (listenerIterator.hasNext()) {
             TestEventListener testListener = (TestEventListener) listenerIterator.next();
             testListener.reference(reference);
@@ -101,15 +104,19 @@ public class TestEventManager {
     }
     
     public void addFailure(String message) {
-        Iterator listenerIterator = aListerners.iterator();
+        Iterator listenerIterator = listerners.iterator();
         while (listenerIterator.hasNext()) {
             TestEventListener testListener = (TestEventListener) listenerIterator.next();
-            testListener.testFailed(message);
+            try {
+            	testListener.testFailed(message);
+            } catch (Exception e) {
+            	log.error("Listerner callback error", e);
+            }
         }
     }
 
     public void addError(String message) {
-        Iterator listenerIterator = aListerners.iterator();
+        Iterator listenerIterator = listerners.iterator();
         while (listenerIterator.hasNext()) {
             TestEventListener testListener = (TestEventListener) listenerIterator.next();
             testListener.testError(message);
@@ -117,7 +124,7 @@ public class TestEventManager {
     }
     
     public void addStimuli(String stimuli) {
-        Iterator listenerIterator = aListerners.iterator();
+        Iterator listenerIterator = listerners.iterator();
         while (listenerIterator.hasNext()) {
             TestEventListener testListener = (TestEventListener) listenerIterator.next();
             testListener.addStimuli(stimuli);
@@ -125,7 +132,7 @@ public class TestEventManager {
     }
     
     public void addResult(String result) {
-        Iterator listenerIterator = aListerners.iterator();
+        Iterator listenerIterator = listerners.iterator();
         while (listenerIterator.hasNext()) {
             TestEventListener testListener = (TestEventListener) listenerIterator.next();
             testListener.addResult(result);
@@ -154,10 +161,10 @@ public class TestEventManager {
     }
 
     public static boolean isBlocking() {
-        return aIsBlocking;
+        return isBlocking;
     }
     public static void setBlocking(boolean value) {
-        aIsBlocking = value;
+        isBlocking = value;
     }
 
     public static boolean isVerificationEnabled() {

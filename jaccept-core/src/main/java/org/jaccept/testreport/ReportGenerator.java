@@ -42,7 +42,7 @@ public class ReportGenerator implements TestEventListener {
     private Element currentElement;
     
     public ReportGenerator() {
-        String specString = System.getProperty("dk.mikis.specMode");
+        String specString = System.getProperty("specMode");
         if (specString != null && specString.equals("true")) {
             specMode = true;
         }
@@ -112,7 +112,9 @@ public class ReportGenerator implements TestEventListener {
         textAppend(currentStep, "expectedResult", expectedResult);
         currentElement = currentStep;
     } 
-    public void stepEnded() {}
+    public void stepEnded() {
+    	//Used for test control, not relevant for report
+    }
     
     public void description(String description) {
         check("Description");

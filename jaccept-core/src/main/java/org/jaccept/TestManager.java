@@ -6,7 +6,7 @@ public class TestManager {
     private final Logger log = Logger.getLogger(TestManager.class);
     
     public synchronized Object createTestHMI() {
-        String implClass = System.getProperty("dk.mikis.componenttest.hmi");
+        String implClass = System.getProperty("componenttest.hmi");
         Object testHMI = null;
         if (implClass != null) {
             try {
