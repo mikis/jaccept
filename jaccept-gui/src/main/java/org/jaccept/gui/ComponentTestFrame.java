@@ -31,18 +31,13 @@ public class ComponentTestFrame extends javax.swing.JFrame {
         aInstance = this;
     }
 
-    private void initComponents() {//GEN-BEGIN:initComponents
-
-        jList1 = new javax.swing.JList();
-        jList1.setBorder(new javax.swing.border.EtchedBorder());
-        jList1.setModel(new ResultDescriptionListModel());
-        jList1.setCellRenderer(new DisappearingListRenderer());
-        jList1.setFixedCellHeight(15);
+    private void initComponents() {
         aResultDescriptionList = new javax.swing.JList();
         aResultDescriptionList.setBorder(new javax.swing.border.EtchedBorder());
         aResultDescriptionList.setModel(new ResultDescriptionListModel());
         aResultDescriptionList.setCellRenderer(new DisappearingListRenderer());
         aResultDescriptionList.setFixedCellHeight(15);
+        aResultDescriptionList.setToolTipText("List of expected results");
         aVerificationRejectButton = new javax.swing.JButton();
         aVerificationRejectButton.setText("Reject");
         aVerificationRejectButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -57,6 +52,7 @@ public class ComponentTestFrame extends javax.swing.JFrame {
                 jTextArea2.setText("");
             }
         });
+        aResultPanelClearButton.setToolTipText("Clears the result panel");
         aVerificationLeftButtonPanel.add(aResultPanelClearButton);
         aVerificationLeftButtonPanel.add(aWordWrapButton);
         aVerificationAcceptButton = new javax.swing.JButton();
@@ -66,6 +62,7 @@ public class ComponentTestFrame extends javax.swing.JFrame {
                 aAcceptButtonMouseClicked();
             }
         });
+        aVerificationAcceptButton.setToolTipText("Accepts the teststep");
         aVerificationButtonPanel.setLayout(new java.awt.BorderLayout());
         aVerificationButtonPanel.add(aVerificationLeftButtonPanel, java.awt.BorderLayout.WEST);
         aVerificationButtonPanel.add(aVerificationRightButtonPanel, java.awt.BorderLayout.EAST);
@@ -83,7 +80,11 @@ public class ComponentTestFrame extends javax.swing.JFrame {
         aInputSpeedLabel = new javax.swing.JLabel();
         aSelectorPanel = new javax.swing.JPanel();
         aModeSelector = new javax.swing.JComboBox();
+        aModeSelector.setEnabled(false);
+        aModeSelector.setToolTipText("Select stimuli mode (Not implemented)");
         aSpeedSelector = new javax.swing.JComboBox();
+        aSpeedSelector.setEnabled(false);
+        aSpeedSelector.setToolTipText("<html>Select the speed the stimuli should be applied (Not implemented)</html>");
         aStimuliDescriptionList = new javax.swing.JList();
         jTextArea1 = new javax.swing.JTextArea();
         jTextAreaScroolPane1 = new JScrollPane(jTextArea1);
@@ -93,6 +94,8 @@ public class ComponentTestFrame extends javax.swing.JFrame {
         aVerificationModePane = new javax.swing.JPanel();
         aInputModeLabel1 = new javax.swing.JLabel();
         aModeSelector2 = new javax.swing.JComboBox();
+        aModeSelector2.setEnabled(false);
+        aModeSelector2.setToolTipText("<html>Select the verification mode (Not implemented)</html>");
         aAcceptPane = new javax.swing.JPanel();
         aVerificationLabel = new javax.swing.JLabel();
         jTextArea2 = new javax.swing.JTextArea();
@@ -337,6 +340,7 @@ public class ComponentTestFrame extends javax.swing.JFrame {
 
     private class TestListener implements TestEventListener{
         private int aStepCounter = 0;
+        private String description;  
 
         public void projectStarted(String name) {
         }
@@ -348,6 +352,7 @@ public class ComponentTestFrame extends javax.swing.JFrame {
         public void caseStarted(String name) {
             aStepCounter = 0;
             jLabel1.setText(name);
+            JOptionPane.showMessageDialog(aInstance, name+"\n"+description, "Run suite", JOptionPane.PLAIN_MESSAGE);        
         }
 
         public void testStarted(String name) {
@@ -355,7 +360,7 @@ public class ComponentTestFrame extends javax.swing.JFrame {
             jLabel1.setText(name);
             jTextArea1.removeAll();
             jTextArea2.removeAll();
-            if (TestEventManager.isBlocking()) JOptionPane.showMessageDialog(aInstance, name, "Run test", JOptionPane.PLAIN_MESSAGE);
+            if (TestEventManager.isBlocking()) JOptionPane.showMessageDialog(aInstance, name+"\n"+description, "Run test", JOptionPane.PLAIN_MESSAGE);
         }
 
         public void stepStarted(String stimuli, String expectedResult) {
@@ -386,6 +391,7 @@ public class ComponentTestFrame extends javax.swing.JFrame {
         }
 
         public void description(String description) {
+        	this.description = description;
         }
         public void addPurpose(String name) {
         }
@@ -438,7 +444,6 @@ public class ComponentTestFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem aOpenTestSetItem;
     private javax.swing.JMenu aOptionMenu;
     private JList aResultDescriptionList;
-    private JList jList1;
     private javax.swing.JPanel aSelectorPanel;
     private javax.swing.JPanel aSettings;
     private javax.swing.JComboBox aSpeedSelector;
