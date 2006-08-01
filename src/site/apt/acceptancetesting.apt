@@ -1,0 +1,43 @@
+Application testing are usually segmented into to types: 
+ 
+  [[1]] Unittesting: Automatic, classlevel, API testing with very little or no description of the tests. 
+ 
+  [[1]] Systemtest: Manual, systemlevel, GUI test with a high degree of test description. 
+  These are also typically used for acceptance testing.
+ 
+ One of the goals of Jaccept is to extend the Junit testframework with features, which would make the framework more suitable for acceptance testing.
+
+Acceptance test
+
+ A acceptance test is a formal test conducted to determine whether or not a system satisfies its acceptance criteria and to enable the customer to determine whether or not to accept the system.
+
+ When a application's interface consists of GUI elements it is normally quite straight forward defining a acceptance test based on the specified graphical components and their user interactions. The acceptance test is normally specified by running through the list of requirements and for every requirement writing one or more tests verifying that the system behaves as defined in the requirement. A test is composed of a number of steps is, each step consisting of a stimuli and a expected system behaviour. 
+
+ The acceptance test is performed by placing a user (preferable a customer representative) in front of the application together with the test specification, with the assign task of applying the stimuli described in the test steps to the application and observing the resulting system behaviour. If the the results produced by the system corresponds to the behaviour described in the test specification, the system is said to be accepted for that step.
+
+ The result is compiled into a test report listing which test passed and which failed.
+
+API acceptance test
+
+ The issue of acceptance testing usually becomes a bit more ambiguous when the system interfaces are API's. API's are not ready accessible for testing, some code has to be written to bridge the man-machine interface. 
+
+* Test GUI
+
+  One approach to overcoming this problem is to write a test GUI, which allows the tester to perform the test as usual. This solution has a couple of short comes which makes it less than ideal for API testing:
+
+ * GUI implementation: The task of implementing a graphical interface for all the relevant API's can quickly evolve into a component with complexity rivalling the application itself. This will in turn require a lot of test GUI debugging.
+
+ * Indirect testing: The attempt to simulate API interactions through a GUI is only an indirect test, and some of the interactions which could be expected by normal application interactions with the API would be difficult to simulate.  
+
+ * Manual testing: One of the nice things about a API is that code can manipulated automatically. If the test interface is a GUI we lose this advantage, and regression testing becomes just as time consuming as with normal GUI interfaces. 
+ 
+* Junit
+
+  Another approach is to write test scripts which when execute calls API operations and verifies the resulting system behaviour. One of the framework available for API testing is the JUnit framework. Originally develop for standalone testing of small units (single or a few classes), the JUnit lacks a number of the features used for acceptance testing. The major short comes are:
+
+ * Testspecification: Junit has no concept of test specification, thet unit tests are defined by their implementation. This means the test can't be described before they are implemented and anybody interested in understanding the tests are required to read and understand the unit test implementation kode.
+ 
+ * Manual test control: Even though manual testing can be a rather time consuming activity, the time spend on stepping through each stimuli and observing the interacting usually gives the tester a much greater feeling of confidence in the test result.
+
+ * Application monitoring: The acceptance tester is use to observing the application during the test by watching the graphical interface. Junit testing is based on verifications coded directly into the testcase and does not allow the tester to observe the system during the test. 
+

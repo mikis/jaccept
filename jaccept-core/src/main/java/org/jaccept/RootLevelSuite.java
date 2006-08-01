@@ -7,6 +7,9 @@ import junit.framework.Test;
 import junit.framework.TestListener;
 import junit.framework.TestResult;
 
+/**
+ * Top level test suite
+ */
 public class RootLevelSuite extends ExtendedTestSuite {
     private static final ReportGenerator reportGenerator = new ReportGenerator();
 

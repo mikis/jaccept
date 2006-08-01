@@ -1,1 +1,4 @@
 Example
+
+ An example usually says more than a thousand words, this is also the case here.
+ Example usages can be found both in the Core and GUI modules. Run the ExampleTestSuite's as normal Junit tests to see demonstrations of the JAccept possibilities. 

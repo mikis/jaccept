@@ -1,11 +1,10 @@
 package org.jaccept.examples;
 
-import org.jaccept.ExtendedTestSuite;
-import org.jaccept.RootLevelSuite;
-import org.jaccept.testreport.ReportGenerator;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
+import org.jaccept.ExtendedTestSuite;
+import org.jaccept.RootLevelSuite;
 
 public class ExampleTestSuite extends TestSuite {
         

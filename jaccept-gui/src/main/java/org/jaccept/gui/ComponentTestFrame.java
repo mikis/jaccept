@@ -7,6 +7,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -43,9 +44,11 @@ public class ComponentTestFrame extends javax.swing.JFrame {
         aVerificationRejectButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
 //                TestEventManager.fail("Result manually rejected");
-                log.warn("Manual selected, not implemented");
             }
         });
+        aVerificationRejectButton.setToolTipText("Rejcts the test result thereby faling the test. (Not implemented)");
+        aVerificationRejectButton.setEnabled(false);
+        
         aResultPanelClearButton.setText("Clear");
         aResultPanelClearButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -86,8 +89,9 @@ public class ComponentTestFrame extends javax.swing.JFrame {
         aSpeedSelector.setEnabled(false);
         aSpeedSelector.setToolTipText("<html>Select the speed the stimuli should be applied (Not implemented)</html>");
         aStimuliDescriptionList = new javax.swing.JList();
-        jTextArea1 = new javax.swing.JTextArea();
-        jTextAreaScroolPane1 = new JScrollPane(jTextArea1);
+        stimuliListModel = new DefaultListModel();
+        stimuliList = new JList(stimuliListModel);
+        jTextAreaScroolPane1 = new JScrollPane(stimuliList);
         aVerificationPanel = new javax.swing.JPanel();
         aVerificationFixedPart = new javax.swing.JPanel();
         aVerificationSettingPane = new javax.swing.JPanel();
@@ -181,7 +185,7 @@ public class ComponentTestFrame extends javax.swing.JFrame {
         aStimuliFixedPart.add(aStimuliDescriptionList, java.awt.BorderLayout.CENTER);
         StimuliPanel.add(aStimuliFixedPart, java.awt.BorderLayout.NORTH);
 
-        jTextArea1.setLineWrap(true);
+//        stimuliList.setLineWrap(true);
         jTextAreaScroolPane1.setPreferredSize(new java.awt.Dimension(1000, 500));
         jTextAreaScroolPane1.setViewportBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         jTextAreaScroolPane1.setAutoscrolls(true);
@@ -273,11 +277,11 @@ public class ComponentTestFrame extends javax.swing.JFrame {
         aWordWrapButton.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    jTextArea1.setLineWrap(true);
+//                    stimuliList.setLineWrap(true);
                     jTextArea2.setLineWrap(true);
                 }
                 else  {
-                    jTextArea1.setLineWrap(false);
+//                    stimuliList.setLineWrap(false);
                     jTextArea2.setLineWrap(false);
                 }
             }
@@ -358,7 +362,7 @@ public class ComponentTestFrame extends javax.swing.JFrame {
         public void testStarted(String name) {
             aStepCounter = 0;
             jLabel1.setText(name);
-            jTextArea1.removeAll();
+            stimuliList.removeAll();
             jTextArea2.removeAll();
             if (TestEventManager.isBlocking()) JOptionPane.showMessageDialog(aInstance, name+"\n"+description, "Run test", JOptionPane.PLAIN_MESSAGE);
         }
@@ -366,13 +370,14 @@ public class ComponentTestFrame extends javax.swing.JFrame {
         public void stepStarted(String stimuli, String expectedResult) {
             aStepCounter++;
             jLabel2.setText("Step "+aStepCounter);
-            jTextArea1.append("\nStep "+aStepCounter+"\n");
+            stimuliListModel.addElement("\nStep "+aStepCounter+"\n");
             jTextArea2.append("\nStep "+aStepCounter+"\n");
             enableManualAccept(false);
         }
 
         public void addStimuli(String stimuli) {
-            jTextArea1.append(stimuli+"\n");
+            stimuliListModel.addElement(stimuli+"\n");
+            stimuliList.ensureIndexIsVisible(stimuliListModel.getSize()-1);
         }
 
         public void addResult(String result) {
@@ -463,7 +468,8 @@ public class ComponentTestFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private JScrollPane jTextAreaScroolPane1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JList  stimuliList;
+    private DefaultListModel  stimuliListModel;
     private JScrollPane jTextAreaScroolPane2;
     private javax.swing.JTextArea jTextArea2;
     private JPanel aVerificationButtonPanel = new JPanel();

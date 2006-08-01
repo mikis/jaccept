@@ -69,8 +69,4 @@ public class DemoTestCase extends ExtendedTestCase {
         assertEquals("Wrong return value", "returnValue", c2t.firstMethod(null));
         
     }
-    
-    public void testDummy() {
-    	
-    }
 }

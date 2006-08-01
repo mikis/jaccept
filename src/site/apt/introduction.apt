@@ -5,16 +5,9 @@
 
 Purpose
 
- Jaccept is a extension to JUnit adding possibility of increased test information and control. 
+ Jaccept is a extension to JUnit adding increased test information and control. 
  
- Application testing are usually segmented into to types: 
- 
-  [[1]] Unittesting: Automatic, classlevel, API testing with very little or no description of the tests. 
- 
-  [[1]] Systemtest: Manual, systemlevel, GUI test with a high degree of test description. 
-  These are also typically used for acceptance testing.
- 
- The purpose of Jaccept is to extend the Junit testframework with features normally only found in the systemtest.
+ Added functionality includes:
  
   * Possibility of specifing test information on suite/testcase/test/teststep level.
   

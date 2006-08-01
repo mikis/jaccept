@@ -7,7 +7,12 @@ import java.util.List;
 import junit.framework.TestResult;
 import junit.framework.TestSuite;
 
-public class ExtendedTestSuite extends TestSuite {
+/**
+ * Superclass for the concrete Jaccept suite classes. 
+ * Main functionality is to store the events produce during construction of the test hierachy and then dispatch the events when the test are actually run.
+ */
+
+public abstract class ExtendedTestSuite extends TestSuite {
     protected static final TestEventManager eventReceiver = TestEventManager.getInstance();
     
     List aProjects = new LinkedList();
