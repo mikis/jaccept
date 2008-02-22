@@ -1,7 +1,5 @@
 package org.jaccept.gui;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
@@ -15,13 +13,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JToggleButton;
 
-import org.apache.log4j.Logger;
 import org.jaccept.TestEventListener;
 import org.jaccept.TestEventManager;
 
 
 public class ComponentTestFrame extends javax.swing.JFrame {
-    private final Logger log = Logger.getLogger(ComponentTestFrame.class);
+//    private final Logger log = Logger.getLogger(ComponentTestFrame.class);
     private static ComponentTestFrame aInstance;
 
     /** Creates new form ComponentTestHMI */
@@ -35,7 +32,7 @@ public class ComponentTestFrame extends javax.swing.JFrame {
     private void initComponents() {
         aResultDescriptionList = new javax.swing.JList();
         aResultDescriptionList.setBorder(new javax.swing.border.EtchedBorder());
-        aResultDescriptionList.setModel(new ResultDescriptionListModel());
+//        aResultDescriptionList.setModel(new ResultDescriptionListModel());
         aResultDescriptionList.setCellRenderer(new DisappearingListRenderer());
         aResultDescriptionList.setFixedCellHeight(15);
         aResultDescriptionList.setToolTipText("List of expected results");
@@ -166,7 +163,7 @@ public class ComponentTestFrame extends javax.swing.JFrame {
         aSelectorPanel.setBorder(new javax.swing.border.EmptyBorder(new java.awt.Insets(5, 5, 5, 5)));
         aModeSelector.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Auto", "Manual" }));
         aModeSelector.setSelectedItem("Manual");
-        TestEventManager.setBlocking(true);
+        TestEventManager.getTestState().setBlocking(true);
         aSelectorPanel.add(aModeSelector);
 
         aSpeedSelector.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "None", "2 seconds", "5 seconds", "10 seconds" }));
@@ -207,8 +204,7 @@ public class ComponentTestFrame extends javax.swing.JFrame {
         aVerificationModePane.setBorder(new javax.swing.border.EmptyBorder(new java.awt.Insets(5, 5, 5, 5)));
         aInputModeLabel1.setText("Mode    ");
         aVerificationModePane.add(aInputModeLabel1, java.awt.BorderLayout.WEST);
-
-        initialiseVerificationSelector();
+        
         aVerificationModePane.add(aModeSelector2, java.awt.BorderLayout.CENTER);
 
         aVerificationSettingPane.add(aVerificationModePane, java.awt.BorderLayout.NORTH);
@@ -288,44 +284,6 @@ public class ComponentTestFrame extends javax.swing.JFrame {
         });
     }//GEN-END:initComponents
 
-    private void initialiseVerificationSelector() {
-        aModeSelector2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Auto", "Semi auto", "Manual" }));
-        if (TestEventManager.isBlocking() &&
-                !TestEventManager.isVerificationEnabled()) {
-            aModeSelector2.setSelectedItem("Manual");
-        }
-        else if (TestEventManager.isBlocking() &&
-                TestEventManager.isVerificationEnabled()) {
-            aModeSelector2.setSelectedItem("Semi auto");
-        }
-        else if (TestEventManager.isVerificationEnabled()
-                && !TestEventManager.isBlocking()) {
-            aModeSelector2.setSelectedItem("Auto");
-            enableManualAccept(false);
-        }
-        aModeSelector2.addActionListener(new ActionListener() {
-            public void actionPerformed (ActionEvent e) {
-                String selectedMode = (String)aModeSelector2.getSelectedItem();
-                if (selectedMode.equals("Auto") ) {
-                    TestEventManager.setBlocking(false);
-                    TestEventManager.setVerificationEnabled(true);
-                    enableManualAccept(false);
-                }
-                else if (selectedMode.equals("Semi auto") ) {
-                    TestEventManager.setBlocking(true);
-                    TestEventManager.setVerificationEnabled(true);
-                    enableManualAccept(true);
-                }
-                else if (selectedMode.equals("Manual") ) {
-                    TestEventManager.setBlocking(true);
-                    TestEventManager.setVerificationEnabled(false);
-                    enableManualAccept(true);
-                }
-            }
-        });
-        aModeSelector2.setToolTipText("Selects the verification mode:");
-    }
-
     /** Exit the Application */
     private void exitForm(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_exitForm
         System.exit(0);
@@ -364,7 +322,7 @@ public class ComponentTestFrame extends javax.swing.JFrame {
             jLabel1.setText(name);
             stimuliList.removeAll();
             jTextArea2.removeAll();
-            if (TestEventManager.isBlocking()) JOptionPane.showMessageDialog(aInstance, name+"\n"+description, "Run test", JOptionPane.PLAIN_MESSAGE);
+            if (TestEventManager.getTestState().getBlocking()) JOptionPane.showMessageDialog(aInstance, name+"\n"+description, "Run test", JOptionPane.PLAIN_MESSAGE);
         }
 
         public void stepStarted(String stimuli, String expectedResult) {

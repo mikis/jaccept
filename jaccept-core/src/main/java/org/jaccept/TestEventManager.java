@@ -8,14 +8,11 @@ import org.apache.log4j.Logger;
 
 public class TestEventManager {
     private static final List listerners = new LinkedList();
-    private static final TestEventManager instance = new TestEventManager();    
-    private static boolean isBlocking = false;
-    private static int stepCounter = 0;
-    private static boolean failed = false;
+    private static final TestEventManager instance = new TestEventManager();   
 
-    private static boolean aVerificationEnabled = true;
     private final Logger log = Logger.getLogger(TestEventManager.class);
 
+    private final static TestState testState = new TestState();
     
     private TestEventManager(){}
 
@@ -52,7 +49,7 @@ public class TestEventManager {
     }
 
     public void addTest(String name) {
-        stepCounter = 0;
+        getTestState().setStepCounter(0);
         Iterator listenerIterator = listerners.iterator();
         while (listenerIterator.hasNext()) {
             TestEventListener testListener = (TestEventListener) listenerIterator.next();
@@ -70,8 +67,8 @@ public class TestEventManager {
     }
 
     public void addStep(String stimuli, String expectedResult) {
-        if (stepCounter > 0) addStepEnd();
-        stepCounter++;
+        if (getTestState().getStepCounter() > 0) addStepEnd();
+        getTestState().setStepCounter(getTestState().getStepCounter()+1);
         Iterator listenerIterator = listerners.iterator();
         while (listenerIterator.hasNext()) {
             TestEventListener testListener = (TestEventListener) listenerIterator.next();
@@ -143,7 +140,7 @@ public class TestEventManager {
     }
     
     public static void block() {
-        if (isBlocking()) {
+        if (getTestState().getBlocking()) {
             synchronized(TestEventManager.class) {
                 try {
                     TestEventManager.class.wait();
@@ -160,18 +157,7 @@ public class TestEventManager {
         }
     }
 
-    public static boolean isBlocking() {
-        return isBlocking;
-    }
-    public static void setBlocking(boolean value) {
-        isBlocking = value;
-    }
-
-    public static boolean isVerificationEnabled() {
-        return aVerificationEnabled;
-    }
-
-    public static void setVerificationEnabled(boolean verificationEnabled) {
-        aVerificationEnabled = verificationEnabled;
-    }
+	public static TestState getTestState() {
+		return testState;
+	}	
 }
