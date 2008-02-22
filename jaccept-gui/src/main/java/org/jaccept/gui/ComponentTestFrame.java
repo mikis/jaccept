@@ -80,10 +80,9 @@ public class ComponentTestFrame extends javax.swing.JFrame {
         aInputSpeedLabel = new javax.swing.JLabel();
         aSelectorPanel = new javax.swing.JPanel();
         aModeSelector = new javax.swing.JComboBox();
-        aModeSelector.setEnabled(false);
-        aModeSelector.setToolTipText("Select stimuli mode (Not implemented)");
+        
+        aModeSelector.setToolTipText("Select stimuli mode");
         aSpeedSelector = new javax.swing.JComboBox();
-        aSpeedSelector.setEnabled(false);
         aSpeedSelector.setToolTipText("<html>Select the speed the stimuli should be applied (Not implemented)</html>");
         aStimuliDescriptionList = new javax.swing.JList();
         stimuliListModel = new DefaultListModel();

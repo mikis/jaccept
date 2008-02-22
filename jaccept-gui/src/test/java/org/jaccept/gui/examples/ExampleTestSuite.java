@@ -2,12 +2,12 @@ package org.jaccept.gui.examples;
 
 import javax.swing.JFrame;
 
-import org.jaccept.ExtendedTestSuite;
-import org.jaccept.RootLevelSuite;
 import org.jaccept.TestEventLogger;
 import org.jaccept.TestEventManager;
 import org.jaccept.examples.DemoTests;
 import org.jaccept.gui.ComponentTestFrame;
+import org.jaccept.structure.ExtendedTestSuite;
+import org.jaccept.structure.RootLevelSuite;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

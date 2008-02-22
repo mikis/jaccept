@@ -3,8 +3,8 @@ package org.jaccept.examples;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.jaccept.ExtendedTestSuite;
-import org.jaccept.RootLevelSuite;
+import org.jaccept.structure.ExtendedTestSuite;
+import org.jaccept.structure.RootLevelSuite;
 
 public class ExampleTestSuite extends TestSuite {
         

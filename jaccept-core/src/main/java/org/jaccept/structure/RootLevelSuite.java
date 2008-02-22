@@ -1,5 +1,6 @@
-package org.jaccept;
+package org.jaccept.structure;
 
+import org.jaccept.TestEventManager;
 import org.jaccept.testreport.ReportGenerator;
 
 import junit.framework.AssertionFailedError;

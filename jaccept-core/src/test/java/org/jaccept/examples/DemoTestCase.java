@@ -2,10 +2,10 @@ package org.jaccept.examples;
 
 import junit.framework.Test;
 
-import org.jaccept.CaseLevelSuite;
-import org.jaccept.ExtendedTestCase;
-import org.jaccept.ExtendedTestSuite;
 import org.jaccept.TestEventManager;
+import org.jaccept.structure.CaseLevelSuite;
+import org.jaccept.structure.ExtendedTestCase;
+import org.jaccept.structure.ExtendedTestSuite;
 
 public class DemoTestCase extends ExtendedTestCase {
     ExampleComponentWrapper c2t = new ExampleComponentWrapper(new ExampleComponent());

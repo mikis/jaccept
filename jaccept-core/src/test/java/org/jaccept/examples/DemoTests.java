@@ -1,7 +1,7 @@
 package org.jaccept.examples;
 
-import org.jaccept.ExtendedTestSuite;
-import org.jaccept.IntermediateLevelSuite;
+import org.jaccept.structure.ExtendedTestSuite;
+import org.jaccept.structure.IntermediateLevelSuite;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

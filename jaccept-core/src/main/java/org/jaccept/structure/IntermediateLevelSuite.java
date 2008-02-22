@@ -1,4 +1,4 @@
-package org.jaccept;
+package org.jaccept.structure;
 
 import junit.framework.TestResult;
 

@@ -1,8 +1,10 @@
-package org.jaccept;
+package org.jaccept.structure;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
+import org.jaccept.TestEventManager;
 
 import junit.framework.TestResult;
 import junit.framework.TestSuite;
