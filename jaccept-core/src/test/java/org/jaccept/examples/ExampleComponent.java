@@ -9,7 +9,7 @@ class ExampleComponent {
 	 private ComponentLister listener;
 	 
 	 /**
-	  * Called th componentlistener with the supplied value
+	  * Called the componentlistener with the supplied value
 	  * @param param The value to give to the listener
 	  * @return The string 'returnValue'
 	  */

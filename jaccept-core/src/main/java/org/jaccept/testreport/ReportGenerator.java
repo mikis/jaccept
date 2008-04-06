@@ -18,6 +18,8 @@ import javax.xml.transform.stream.StreamSource;
 
 import org.apache.log4j.Logger;
 import org.jaccept.TestEventListener;
+import org.testng.ITestContext;
+import org.testng.ITestResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -89,6 +91,7 @@ public class ReportGenerator implements TestEventListener {
         step = 0;
     }
     public void testEnded() {}
+    
     public void testFailed(String message) {
         if (currentStep != null) {
             currentStep.setAttribute("outcome","&divide;");
@@ -145,8 +148,6 @@ public class ReportGenerator implements TestEventListener {
             
             for(int i = 0; i < projects.getLength(); i++) {
                 name = ((Element) projects.item(i)).getAttribute("name");
-                if (project != null && ! name.equals(project))
-                    continue;
                 File file = new File(name + ".html");
                 if (debug) System.out.println("Generating project at : " + file.getAbsoluteFile() );
                 Source source = new DOMSource(projects.item(i));
@@ -160,14 +161,9 @@ public class ReportGenerator implements TestEventListener {
     }
     
     private Element simpleAppend(Element parent, String kind, String name) {
-        if (parent == null) {
-            throw new IllegalStateException
-            ("Exception in Projects: " +
-                    "No parent in hierarchy for " + kind);
-        }
         Element child = doc.createElement(kind);
         if (name != null && !name.equals("")) child.setAttribute("name", name);
-        parent.appendChild(child);
+        testprojects.appendChild(child);
         return child;
     }
     
@@ -193,4 +189,39 @@ public class ReportGenerator implements TestEventListener {
         // TODO Auto-generated method stub
         
     }
+
+	public void onFinish(ITestContext context) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void onStart(ITestContext context) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void onTestFailure(ITestResult result) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void onTestSkipped(ITestResult result) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void onTestStart(ITestResult result) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void onTestSuccess(ITestResult result) {
+		// TODO Auto-generated method stub
+		
+	}
 }

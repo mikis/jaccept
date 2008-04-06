@@ -1,9 +1,12 @@
 package org.jaccept;
 
 import org.apache.log4j.Logger;
+import org.jaccept.testreport.ReportGenerator;
 
 public class TestManager {
     private final Logger log = Logger.getLogger(TestManager.class);
+    private static final ReportGenerator reportGenerator = new ReportGenerator();
+
     
     public synchronized Object createTestHMI() {
         String implClass = System.getProperty("componenttest.hmi");

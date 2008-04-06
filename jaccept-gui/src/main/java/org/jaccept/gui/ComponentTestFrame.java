@@ -28,6 +28,10 @@ public class ComponentTestFrame extends javax.swing.JFrame {
         TestEventManager.addTestListener(new TestListener());
         aInstance = this;
     }
+    
+    private void createStimuliSelector() {
+    	
+    }
 
     private void initComponents() {
         aResultDescriptionList = new javax.swing.JList();
