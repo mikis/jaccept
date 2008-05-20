@@ -1,10 +1,12 @@
 package org.jaccept;
 
+import org.testng.IReporter;
+import org.testng.ISuiteListener;
 import org.testng.ITestListener;
 
 
 
-public interface TestEventListener extends ITestListener {
+public interface TestEventListener extends ITestListener, ISuiteListener, IReporter {
     
 //    /**
 //     * Signals the beginning of a test case. 
@@ -35,6 +37,9 @@ public interface TestEventListener extends ITestListener {
 //     */
 //    void testError(String message);
 
+
+    public void projectStarted(String name);
+	
     /**
      * Signals the start of a test step.
      * @param stimuli The stimuli associated with the test step
@@ -54,7 +59,7 @@ public interface TestEventListener extends ITestListener {
     void addStimuli(String stimuli);
     
     /**
-     * Signal a result has been received from the testcomponent. 
+     * Signal a result has been received from the test component. 
      * @param result String representation of the result 
      */
     void addResult(String result);

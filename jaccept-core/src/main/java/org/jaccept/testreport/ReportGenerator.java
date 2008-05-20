@@ -1,7 +1,10 @@
 package org.jaccept.testreport;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -17,9 +20,12 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
 import org.apache.log4j.Logger;
+import org.apache.log4j.helpers.Loader;
 import org.jaccept.TestEventListener;
+import org.testng.ISuite;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
+import org.testng.xml.XmlSuite;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -61,11 +67,13 @@ public class ReportGenerator implements TestEventListener {
     }
     
     private void initStylesheet() {
-        try {
-            styleSheet = ClassLoader.getSystemClassLoader().getResourceAsStream(STYLE_PATH);
-        } catch (Exception e) {
-            throw new RuntimeException("Couldn't read " + e.getMessage());
-        }
+        	URL jacceptPropertiesUrl = Loader.getResource("testreport.xsl");
+            try {
+				styleSheet = jacceptPropertiesUrl.openStream();
+			} catch (IOException e) {
+				throw new RuntimeException("Unable to open stylesheet", e);
+			}
+            
         if (styleSheet == null) log.fatal("Unable to find style sheet "+STYLE_PATH);
     }
     
@@ -74,30 +82,32 @@ public class ReportGenerator implements TestEventListener {
         currentElement = currentProject;
         currentSuite = currentCase = currentTest = currentStep = null;
     }
-    public void suiteStarted(String name) {
-        currentSuite = simpleAppend(currentProject, "suite", name);
+
+	public void onStart(ISuite arg0) {
+        currentSuite = simpleAppend(currentProject, "suite", arg0.getName());
         currentElement = currentSuite;
         currentCase = currentTest = currentStep = null;
     }    
-    public void caseStarted(String name) {
-        currentCase = simpleAppend(currentSuite, "case", name);
+	public void onStart(ITestContext context) {
+        currentCase = simpleAppend(currentSuite, "case", context.getName());
         currentElement = currentCase;
         currentTest = currentStep = null;
     }
-    public void testStarted(String name) {
-        currentTest = simpleAppend(currentCase, "test", name);
+
+	public void onTestStart(ITestResult result) {
+        currentTest = simpleAppend(currentCase, "test", result.getName());
         currentElement = currentTest;
         currentStep = null;
         step = 0;
     }
     public void testEnded() {}
-    
-    public void testFailed(String message) {
+
+	public void onTestFailure(ITestResult result) {
         if (currentStep != null) {
             currentStep.setAttribute("outcome","&divide;");
         }
         currentElement = currentTest;
-        simpleAppend(currentElement, "failure", message);
+        simpleAppend(currentElement, "failure", result.getParameters().toString());
     }
     public void testError(String message) {
         if (currentStep != null) {
@@ -129,13 +139,7 @@ public class ReportGenerator implements TestEventListener {
         simpleAppend(currentElement, "ref", reference);
     }
     
-    
-    
-    public void generateAllProtocols() {
-        generateProtocol(null);
-    }
-    
-    public void generateProtocol(String project) {
+	public void generateReport(List<XmlSuite> arg0, List<ISuite> arg1, String arg2) {
         if (debug) System.out.println("Generating test reports .... ");
         try {
             Transformer transformer = TransformerFactory.newInstance().newTransformer(new StreamSource(styleSheet));
@@ -161,9 +165,14 @@ public class ReportGenerator implements TestEventListener {
     }
     
     private Element simpleAppend(Element parent, String kind, String name) {
+        if (parent == null) {
+            throw new IllegalStateException
+            ("Exception in Projects: " +
+                    "No parent in hierarchy for " + kind);
+        }
         Element child = doc.createElement(kind);
         if (name != null && !name.equals("")) child.setAttribute("name", name);
-        testprojects.appendChild(child);
+        parent.appendChild(child);
         return child;
     }
     
@@ -186,26 +195,12 @@ public class ReportGenerator implements TestEventListener {
     }
     
     public void addResult(String result) {
-        // TODO Auto-generated method stub
-        
     }
 
 	public void onFinish(ITestContext context) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void onStart(ITestContext context) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void onTestFailure(ITestResult result) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -215,12 +210,12 @@ public class ReportGenerator implements TestEventListener {
 		
 	}
 
-	public void onTestStart(ITestResult result) {
+	public void onTestSuccess(ITestResult result) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void onTestSuccess(ITestResult result) {
+	public void onFinish(ISuite arg0) {
 		// TODO Auto-generated method stub
 		
 	}

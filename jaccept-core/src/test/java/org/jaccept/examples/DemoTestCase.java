@@ -1,19 +1,13 @@
 package org.jaccept.examples;
 
-import org.jaccept.TestEventLogger;
+import static org.testng.AssertJUnit.assertEquals;
+
 import org.jaccept.TestEventManager;
 import org.jaccept.structure.ExtendedTestCase;
-
-import org.testng.annotations.*;
-
-import static org.testng.AssertJUnit.*;
+import org.testng.annotations.Test;
 
 public class DemoTestCase extends ExtendedTestCase {
     ExampleComponentWrapper c2t = new ExampleComponentWrapper(new ExampleComponent());
-   
-    public DemoTestCase() {
-        TestEventManager.addTestListener(new TestEventLogger());        
-    }
     
     @Test
 	public void testFirstMethod() {
@@ -38,7 +32,7 @@ public class DemoTestCase extends ExtendedTestCase {
         assertEquals("Wrong return value", "returnValue", c2t.firstMethod("beta"));
     }    
 
-//    @Test
+    @Test
     public void testFirstMethodNull() { 
         addDescription("Verify that the component2Test handles null parameters correctly");
         addReference("-------------");

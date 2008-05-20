@@ -3,7 +3,6 @@ package org.jaccept.structure;
 import org.jaccept.TestEventManager;
 
 public abstract class ExtendedTestCase {
-//	private static final ReportGenerator reportGenerator = new ReportGenerator();
     private static final TestEventManager eventReceiver = TestEventManager.getInstance();
    
     /**
