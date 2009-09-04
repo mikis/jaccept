@@ -4,6 +4,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -15,6 +16,10 @@ import javax.swing.JToggleButton;
 
 import org.jaccept.TestEventListener;
 import org.jaccept.TestEventManager;
+import org.testng.ISuite;
+import org.testng.ITestContext;
+import org.testng.ITestResult;
+import org.testng.xml.XmlSuite;
 
 
 public class ComponentTestFrame extends javax.swing.JFrame {
@@ -27,6 +32,8 @@ public class ComponentTestFrame extends javax.swing.JFrame {
         setVisible(true);
         TestEventManager.addTestListener(new TestListener());
         aInstance = this;
+        pack();
+        setVisible(true);
     }
     
     private void createStimuliSelector() {
@@ -166,7 +173,7 @@ public class ComponentTestFrame extends javax.swing.JFrame {
         aSelectorPanel.setBorder(new javax.swing.border.EmptyBorder(new java.awt.Insets(5, 5, 5, 5)));
         aModeSelector.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Auto", "Manual" }));
         aModeSelector.setSelectedItem("Manual");
-        TestEventManager.getTestState().setBlocking(true);
+        TestEventManager.getInstance().getTestState().setBlocking(true);
         aSelectorPanel.add(aModeSelector);
 
         aSpeedSelector.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "None", "2 seconds", "5 seconds", "10 seconds" }));
@@ -320,13 +327,7 @@ public class ComponentTestFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(aInstance, name+"\n"+description, "Run suite", JOptionPane.PLAIN_MESSAGE);        
         }
 
-        public void testStarted(String name) {
-            aStepCounter = 0;
-            jLabel1.setText(name);
-            stimuliList.removeAll();
-            jTextArea2.removeAll();
-            if (TestEventManager.getTestState().getBlocking()) JOptionPane.showMessageDialog(aInstance, name+"\n"+description, "Run test", JOptionPane.PLAIN_MESSAGE);
-        }
+        public void testStarted(String name) {  }
 
         public void stepStarted(String stimuli, String expectedResult) {
             aStepCounter++;
@@ -382,7 +383,7 @@ public class ComponentTestFrame extends javax.swing.JFrame {
 
         public void stepEnded() {
             enableManualAccept(true);
-            TestEventManager.block();
+            TestEventManager.getInstance().block();
         }
 
         public void testEnded() {
@@ -391,6 +392,49 @@ public class ComponentTestFrame extends javax.swing.JFrame {
 
         public void testFailed(String message) {
         }
+
+		public void onFinish(ITestContext arg0) {
+		}
+
+		public void onStart(ITestContext arg0) {
+		}
+
+		public void onTestFailedButWithinSuccessPercentage(ITestResult arg0) {
+		}
+
+		public void onTestFailure(ITestResult arg0) {
+		}
+
+		public void onTestSkipped(ITestResult arg0) {
+		}
+
+		public void onTestStart(ITestResult arg0) {
+            aStepCounter = 0;
+            jLabel1.setText(arg0.getName());
+            stimuliList.removeAll();
+            jTextArea2.removeAll();
+            if (TestEventManager.getInstance().getTestState().getBlocking()) JOptionPane.showMessageDialog(aInstance, arg0.getName()+"\n"+description, "Run test", JOptionPane.PLAIN_MESSAGE);
+      
+		}
+
+		public void onTestSuccess(ITestResult arg0) {
+		}
+
+		public void onFinish(ISuite arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		public void onStart(ISuite arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		public void generateReport(List<XmlSuite> arg0, List<ISuite> arg1,
+				String arg2) {
+			// TODO Auto-generated method stub
+			
+		}
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

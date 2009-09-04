@@ -1,9 +1,15 @@
 package org.jaccept.gui;
 
+import java.util.List;
+
 import javax.swing.DefaultListModel;
 
 import org.jaccept.TestEventListener;
 import org.jaccept.TestEventManager;
+import org.testng.ISuite;
+import org.testng.ITestContext;
+import org.testng.ITestResult;
+import org.testng.xml.XmlSuite;
 
 
 public class ResultDescriptionListModel extends DefaultListModel implements TestEventListener {
@@ -14,23 +20,10 @@ public class ResultDescriptionListModel extends DefaultListModel implements Test
         TestEventManager.addTestListener(this);
     }
 
-    public void suiteStarted(String name) {}
-
     public void caseStarted(String name) {
         aResultCounter = 0;
         this.clear();
     }
-
-    public void testStarted(String name) {
-        aResultCounter = 0;
-        this.clear();
-    }
-
-    public void testEnded() {}
-
-    public void testFailed(String message) {}
-
-    public void testError(String message) {}
 
     public void stepStarted(String stimuli, String expectedResult) {  
         if (this.getSize() == 3) removeElementAt(0);
@@ -49,4 +42,43 @@ public class ResultDescriptionListModel extends DefaultListModel implements Test
     public void addStimuli(String stimuli) {}
 
     public void addResult(String result) {}
+
+	public void onFinish(ITestContext arg0) {
+	}
+
+	public void onStart(ITestContext arg0) {
+	}
+
+	public void onTestFailedButWithinSuccessPercentage(ITestResult arg0) {
+	}
+
+	public void onTestFailure(ITestResult arg0) {
+	}
+
+	public void onTestSkipped(ITestResult arg0) {
+	}
+
+	public void onTestStart(ITestResult arg0) {
+        aResultCounter = 0;
+        this.clear();
+	}
+
+	public void onTestSuccess(ITestResult arg0) {
+	}
+
+	public void onFinish(ISuite arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void onStart(ISuite arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void generateReport(List<XmlSuite> arg0, List<ISuite> arg1,
+			String arg2) {
+		// TODO Auto-generated method stub
+		
+	}
 }

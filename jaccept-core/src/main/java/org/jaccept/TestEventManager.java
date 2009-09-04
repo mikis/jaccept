@@ -29,6 +29,7 @@ public class TestEventManager implements ITestListener {
     	PropertyConfigurator.configure(url);
     	
         URL jacceptPropertiesUrl = Loader.getResource("jaccept.properties");
+		log.info("Loading properties from "+jacceptPropertiesUrl);
         Properties jacceptProperties = new Properties();
         String clientClasses = null;
         try {
@@ -204,7 +205,7 @@ public class TestEventManager implements ITestListener {
         return instance ;
     }
     
-    public static void block() {
+    public void block() {
         if (getTestState().getBlocking()) {
             synchronized(TestEventManager.class) {
                 try {
@@ -222,7 +223,7 @@ public class TestEventManager implements ITestListener {
         }
     }
 
-	public static TestState getTestState() {
+	public TestState getTestState() {
 		return testState;
 	}
 }

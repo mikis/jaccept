@@ -1,9 +1,15 @@
 package org.jaccept.gui;
 
+import java.util.List;
+
 import javax.swing.DefaultListModel;
 
 import org.jaccept.TestEventListener;
 import org.jaccept.TestEventManager;
+import org.testng.ISuite;
+import org.testng.ITestContext;
+import org.testng.ITestResult;
+import org.testng.xml.XmlSuite;
 
 
 public class StimuliDescriptionListModel extends DefaultListModel implements TestEventListener {
@@ -14,39 +20,9 @@ public class StimuliDescriptionListModel extends DefaultListModel implements Tes
         TestEventManager.addTestListener(this);
     }
 
-    public void projectStarted(String name) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    public void suiteStarted(String name) {
-        // TODO Auto-generated method stub
-        
-    }
-
     public void caseStarted(String name) {
         aStepCounter = 0;
         this.clear();
-    }
-
-    public void testStarted(String name) {
-        aStepCounter = 0;
-        this.clear();
-    }
-
-    public void testEnded() {
-        // TODO Auto-generated method stub
-        
-    }
-
-    public void testFailed(String message) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    public void testError(String message) {
-        // TODO Auto-generated method stub
-        
     }
 
     public void stepStarted(String stimuli, String expectedResult) {
@@ -56,27 +32,61 @@ public class StimuliDescriptionListModel extends DefaultListModel implements Tes
     }
 
     public void stepEnded() {
-        // TODO Auto-generated method stub
-        
     }
 
     public void description(String description) {
-        // TODO Auto-generated method stub
-        
     }
 
     public void reference(String reference) {
-        // TODO Auto-generated method stub
-        
     }
 
     public void addStimuli(String stimuli) {
-        // TODO Auto-generated method stub
-        
     }
 
     public void addResult(String result) {
-        // TODO Auto-generated method stub
-        
     }
+
+	public void onFinish(ITestContext arg0) {
+	}
+
+	public void onStart(ITestContext arg0) {
+	}
+
+	public void onTestFailedButWithinSuccessPercentage(ITestResult arg0) {
+	}
+
+	public void onTestFailure(ITestResult arg0) {
+	}
+
+	public void onTestSkipped(ITestResult arg0) {
+	}
+
+	public void onTestStart(ITestResult arg0) {
+	}
+
+	public void onTestSuccess(ITestResult arg0) {
+        aStepCounter = 0;
+        this.clear();
+	}
+
+	public void projectStarted(String name) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void onFinish(ISuite arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void onStart(ISuite arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void generateReport(List<XmlSuite> arg0, List<ISuite> arg1,
+			String arg2) {
+		// TODO Auto-generated method stub
+		
+	}
 }

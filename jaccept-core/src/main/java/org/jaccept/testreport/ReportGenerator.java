@@ -200,17 +200,17 @@ public class ReportGenerator implements TestEventListener {
 	public void onFinish(ITestContext context) {
 	}
 
-	public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
+	public void onTestFailedButWithinSuccessPercentage(ITestResult arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void onTestSkipped(ITestResult result) {
+	public void onTestSkipped(ITestResult arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void onTestSuccess(ITestResult result) {
+	public void onTestSuccess(ITestResult arg0) {
 		// TODO Auto-generated method stub
 		
 	}
