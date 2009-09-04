@@ -10,7 +10,7 @@
   <name>Graphical frontend for jaccept test execution</name>
   <dependencies>
     <dependency>
-      <groupId>jaccept</groupId>
+      <groupId>org.jaccept</groupId>
       <artifactId>jaccept-core</artifactId>
       <version>0.2.0-SNAPSHOT</version>
     </dependency>
@@ -18,7 +18,6 @@
       <groupId>org.jaccept</groupId>
       <artifactId>jaccept-core</artifactId>
       <version>0.2.0-SNAPSHOT</version>
-      <scope>compile</scope>
       <type>test-jar</type>
     </dependency>
   </dependencies>
