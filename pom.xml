@@ -4,7 +4,7 @@
 	<groupId>org.jaccept</groupId>
 	<artifactId>jaccept</artifactId>
 	<packaging>pom</packaging>
-	<version>0.2</version>
+	<version>0.3-SNAPSHOT</version>
 	<name>Jaccept</name>
 	<description>JUnit extension providing acceptance test capabilities</description>
 	<url>http://jaccept.sourceforge.net</url>
@@ -38,9 +38,9 @@
 		</license>
 	</licenses>
 	<scm>
-		<connection>scm:svn:http://jaccept.svn.sourceforge.net/svnroot/jaccept/tags/jaccept-0.2</connection>
-		<developerConnection>scm:svn:https://jaccept.svn.sourceforge.net/svnroot/jaccept/tags/jaccept-0.2</developerConnection>
-		<url>http://fisheye.agilos.org/browse/JAccept/tags/jaccept-0.2</url>
+		<connection>scm:svn:http://jaccept.svn.sourceforge.net/svnroot/jaccept/trunk</connection>
+		<developerConnection>scm:svn:https://jaccept.svn.sourceforge.net/svnroot/jaccept/trunk</developerConnection>
+		<url>http://fisheye.agilos.org/browse/JAccept</url>
 	</scm>
 	<modules>
 		<module>jaccept-core</module>
