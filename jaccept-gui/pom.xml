@@ -6,7 +6,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>jaccept-gui</artifactId>
-  <name>Graphical frontend for jaccept test execution</name>
+  <name>Graphical frontend</name>
   <dependencies>
     <dependency>
       <groupId>org.jaccept</groupId>

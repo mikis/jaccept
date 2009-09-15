@@ -37,7 +37,9 @@ public class ReportGenerator implements TestEventListener {
     
     private static InputStream styleSheet = null;
     private static boolean specMode = false;
-    private static final boolean debug = true;
+    private static File testreportFile = new File("target"+File.separator+"" + "jaccept-testreport.html");
+
+	private static final boolean debug = true;
     private static int step = 0;
     
     private Document doc;
@@ -152,10 +154,9 @@ public class ReportGenerator implements TestEventListener {
             
             for(int i = 0; i < projects.getLength(); i++) {
                 name = ((Element) projects.item(i)).getAttribute("name");
-                File file = new File(name + ".html");
-                if (debug) System.out.println("Generating project at : " + file.getAbsoluteFile() );
+                if (debug) System.out.println("Generating project at : " + testreportFile.getAbsoluteFile() );
                 Source source = new DOMSource(projects.item(i));
-                Result result = new StreamResult(file);
+                Result result = new StreamResult(testreportFile);
                 transformer.transform(source, result);
                 System.out.println("Generated project: " + name);
             }
@@ -216,7 +217,14 @@ public class ReportGenerator implements TestEventListener {
 	}
 
 	public void onFinish(ISuite arg0) {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub		
+	}
+	
+    public static File getTestreportFile() {
+		return testreportFile;
+	}
+
+	public static void setTestreportFile(File testreportFile) {
+		ReportGenerator.testreportFile = testreportFile;
 	}
 }

@@ -6,7 +6,7 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>jaccept-core</artifactId>
-	<name>JAccept core module</name>
+	<name>Core module</name>
 	<dependencies>
 		<dependency>
 			<groupId>org.jentity</groupId>

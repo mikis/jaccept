@@ -10,7 +10,7 @@ public class DemoTestCase extends ExtendedTestCase {
     ExampleComponentWrapper c2t = new ExampleComponentWrapper(new ExampleComponent());
     
     @Test
-	public void testFirstMethod() {
+	public void testFirstMethod() {    	
         addDescription("Test level description test 1");
         
         addStep("Create a component2Test instance", "");
@@ -31,7 +31,7 @@ public class DemoTestCase extends ExtendedTestCase {
 		"The testlistener should be notified of the call again and the string 'returnValue' should be still be returned");
         assertEquals("Wrong return value", "returnValue", c2t.firstMethod("beta"));
     }    
-
+    
     @Test
     public void testFirstMethodNull() { 
         addDescription("Verify that the component2Test handles null parameters correctly");

@@ -10,7 +10,7 @@
   </bannerRight>
   <body>
     <links>
-      <item name="Maven 2" href="http://maven.apache.org/maven2/"/>
+      <item name="Agilos.org" href="http://agilos.org"/>
     </links>
 
     <menu name="Jaccept">
@@ -18,6 +18,8 @@
       <item name="Demo" href="demo.html"/>      
       <item name="Acceptance testing" href="acceptancetesting.html"/>
     </menu>      
+    <menu ref="modules" />
+    
     
     ${reports}
   </body>

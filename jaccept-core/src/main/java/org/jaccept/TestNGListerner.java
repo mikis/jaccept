@@ -49,8 +49,7 @@ public class TestNGListerner implements ITestListener, ISuiteListener, IReporter
 		tm.onStart(arg0);
 	}
 
-	public void generateReport(List<XmlSuite> arg0, List<ISuite> arg1,
-			String arg2) {
+	public void generateReport(List<XmlSuite> arg0, List<ISuite> arg1, String arg2) {
 		tm.generateReport(arg0, arg1, arg2);		
 	}
 }
