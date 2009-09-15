@@ -4,7 +4,6 @@
   <artifactId>maven-jaccept-plugin</artifactId>
   <packaging>maven-plugin</packaging>
   <name>Maven2 reporting plugin</name>
-  <url>http://maven.apache.org</url>
   	<parent>
 		<groupId>org.jaccept</groupId>
 		<artifactId>jaccept</artifactId>

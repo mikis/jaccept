@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jaccept</groupId>
 	<artifactId>jaccept</artifactId>
@@ -17,8 +18,10 @@
 		<system>Bamboo</system>
 		<url>http://bamboo.agilos.org/browse/JAC</url>
 	</ciManagement>
-	<mailingLists>
-	</mailingLists>
+	<organization>
+		<name>Agilos.org</name>
+		<url>http://agilos.org</url>
+	</organization>
 	<developers>
 		<developer>
 			<id>mikisseth</id>
@@ -43,10 +46,10 @@
 		<url>http://fisheye.agilos.org/browse/JAccept</url>
 	</scm>
 	<modules>
-    <module>jaccept-core</module>
-    <module>jaccept-gui</module>
-    <module>maven-jaccept-plugin</module>
-  </modules>
+		<module>jaccept-core</module>
+		<module>jaccept-gui</module>
+		<module>maven-jaccept-plugin</module>
+	</modules>
 	<dependencies>
 		<dependency>
 			<groupId>log4j</groupId>
@@ -75,6 +78,24 @@
 					<optimize>false</optimize>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>dashboard-maven-plugin</artifactId>
+				<configuration>
+					<dialect>org.hibernate.dialect.MySQLInnoDBDialect</dialect>
+					<driverClass>com.mysql.jdbc.Driver</driverClass>
+					<connectionUrl>jdbc:mysql://192.168.0.100:3306/maven?autoReconnect=true</connectionUrl>
+					<username>mavenuser</username>
+					<password>maven2997</password>
+				</configuration>	         
+				<dependencies>
+            		<dependency>
+						<groupId>mysql</groupId>
+						<artifactId>mysql-connector-java</artifactId>
+						<version>5.0.3</version>
+					</dependency>
+				</dependencies>
+			</plugin>
 		</plugins>
 	</build>
 	<reporting>
@@ -83,7 +104,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-project-info-reports-plugin</artifactId>
 			</plugin>
-			<plugin>          
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>2.2</version>
@@ -91,8 +112,8 @@
 					<aggregate>true</aggregate>
 				</configuration>
 			</plugin>
-			<plugin>        
-				<groupId>org.apache.maven.plugins</groupId>			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-changelog-plugin</artifactId>
 			</plugin>
 			<plugin>
@@ -100,19 +121,25 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-checkstyle-plugin</artifactId>
+				<configuration>
+					<aggregate>true</aggregate>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>cobertura-maven-plugin</artifactId>
+				<configuration>
+					<aggregate>true</aggregate>
+				</configuration>
 			</plugin>
-			<plugin>        
-			    <groupId>org.apache.maven.plugins</groupId>			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jxr-plugin</artifactId>
 				<configuration>
-          			<aggregate>true</aggregate>          
-          			<linkJavadoc>true</linkJavadoc>  
-          			<javadocDir>target/site/apidocs\</javadocDir>          			      			
-				</configuration>				
+					<aggregate>true</aggregate>
+					<linkJavadoc>true</linkJavadoc>
+					<javadocDir>target/site/apidocs</javadocDir>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -122,9 +149,24 @@
 					<targetJdk>1.5</targetJdk>
 				</configuration>
 			</plugin>
-			<plugin>        
-				<groupId>org.apache.maven.plugins</groupId>			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-report-plugin</artifactId>
+				<configuration>
+					<aggregate>true</aggregate>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<configuration>
+					<xmlOutput>true</xmlOutput>
+					<effort>Max</effort>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>dashboard-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</reporting>
