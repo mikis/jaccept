@@ -34,7 +34,7 @@ public class StdOutLogger implements TestEventListener {
 	}
 	
 	public void stepEnded() {
-		System.out.println("\t\t\tStep ended");
+		//System.out.println("\t\t\tStep ended");
 	}
 
 	public void onFinish(ITestContext context) {
