@@ -4,7 +4,7 @@
   <groupId>org.jaccept</groupId>
   <artifactId>jaccept</artifactId>
   <packaging>pom</packaging>
-  <version>0.3</version>
+  <version>0.4-SNAPSHOT</version>
   <name>Jaccept</name>
   <parent>
     <groupId>org.sonatype.oss</groupId>
