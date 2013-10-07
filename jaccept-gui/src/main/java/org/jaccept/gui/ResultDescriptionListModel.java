@@ -1,9 +1,5 @@
 package org.jaccept.gui;
 
-import java.util.List;
-
-import javax.swing.DefaultListModel;
-
 import org.jaccept.TestEventListener;
 import org.jaccept.TestEventManager;
 import org.testng.ISuite;
@@ -11,74 +7,87 @@ import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.xml.XmlSuite;
 
+import javax.swing.*;
+import java.util.List;
+
 
 public class ResultDescriptionListModel extends DefaultListModel implements TestEventListener {
     private int aResultCounter = 0;
 
     public ResultDescriptionListModel() {
         super();
-        TestEventManager.addTestListener(this);
+        TestEventManager.getInstance().addTestListener(this);
     }
 
-    public void caseStarted(String name) {
+    @Override
+    public void classStart(String name) {
         aResultCounter = 0;
         this.clear();
     }
 
-    public void stepStarted(String stimuli, String expectedResult) {  
+    @Override
+    public void stepStart(String stimuli, String expectedResult) {
         if (this.getSize() == 3) removeElementAt(0);
         aResultCounter++;
-        addElement(aResultCounter+"  "+expectedResult);
+        addElement(aResultCounter + "  " + expectedResult);
     }
 
-    public void stepEnded() {}
+    @Override
+    public void addFixture(String fixtureDescription) {
+        addElement("    " + fixtureDescription);
+    }
 
-    public void description(String description) {}
+    @Override
+    public void stepEnd() {
+    }
 
-    public void reference(String reference) {}
+    @Override
+    public void addDescription(String description) {
+    }
 
-    public void projectStarted(String name) {}
+    @Override
+    public void addReference(String reference) {
+    }
 
-    public void addStimuli(String stimuli) {}
+    @Override
+    public void projectStart(String name) {
+    }
 
-    public void addResult(String result) {}
+    @Override
+    public void addStimuli(String stimuli) {
+    }
 
-	public void onFinish(ITestContext arg0) {
-	}
+    @Override
+    public void addResult(String result) {
+    }
 
-	public void onStart(ITestContext arg0) {
-	}
+    @Override
+    public void classFinish() {
+    }
 
-	public void onTestFailedButWithinSuccessPercentage(ITestResult arg0) {
-	}
+    @Override
+    public void testFailure(ITestResult arg0) {
+    }
 
-	public void onTestFailure(ITestResult arg0) {
-	}
-
-	public void onTestSkipped(ITestResult arg0) {
-	}
-
-	public void onTestStart(ITestResult arg0) {
+    @Override
+    public void testStart(String name) {
         aResultCounter = 0;
         this.clear();
-	}
+    }
 
-	public void onTestSuccess(ITestResult arg0) {
-	}
+    @Override
+    public void testSuccess(ITestResult arg0) {
+    }
 
-	public void onFinish(ISuite arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void suiteFinish() {
+    }
 
-	public void onStart(ISuite arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void suiteStart(String name) {
+    }
 
-	public void generateReport(List<XmlSuite> arg0, List<ISuite> arg1,
-			String arg2) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void projectFinish() {
+    }
 }

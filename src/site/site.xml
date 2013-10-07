@@ -2,7 +2,9 @@
 <project name="Jaccept">
   <bannerLeft>
     <name>Jaccept</name>
-    <src>http://sflogo.sourceforge.net/sflogo.php?group_id=159461&amp;type=2" width="125" height="37" border="0" alt="SourceForge.net Logo"</src>
+    <src>http://sflogo.sourceforge.net/sflogo.php?group_id=159461&amp;type=2" width="125" height="37" border="0"
+      alt="SourceForge.net Logo"
+    </src>
     <href>http://sourceforge.net/</href>
   </bannerLeft>
   <bannerRight>
@@ -15,12 +17,12 @@
 
     <menu name="Jaccept">
       <item name="Introduction" href="introduction.html"/>
-      <item name="Demo" href="demo.html"/>      
+      <item name="Demo" href="demo.html"/>
       <item name="Acceptance testing" href="acceptancetesting.html"/>
-    </menu>      
-    <menu ref="modules" />
-    
-    
+    </menu>
+    <menu ref="modules"/>
+
+
     ${reports}
   </body>
 </project>

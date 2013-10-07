@@ -1,129 +1,85 @@
 package org.jaccept;
 
-import java.util.List;
-
-import org.testng.ISuite;
-import org.testng.ITestContext;
 import org.testng.ITestResult;
-import org.testng.xml.XmlSuite;
 
 public class StdOutLogger implements TestEventListener {
-
-    public void projectStarted(String name) {
-		System.out.println("Starting testproject"+name);
+    @Override
+    public void projectStart(String name) {
+        System.out.println("Starting test project " + name);
     }
-	
-	public void addResult(String result) {
-		System.out.println("\t\t\t\tResult: "+result);
-	}
 
-	public void addStimuli(String stimuli) {
-		System.out.println("\t\t\t\tStimuli: "+stimuli);
-	}
+    @Override
+    public void suiteStart(String name) {
+        System.out.println("  Suite: " + name);
+    }
 
-	public void description(String description) {
-		System.out.println("\t\tDescription: "+description);		
-	}
+    @Override
+    public void classStart(String name) {
+        System.out.println("    Starting testcase " + name);
+    }
 
-	public void reference(String reference) {
-		System.out.println("\t\tReference: "+reference);
-	}
+    @Override
+    public void testStart(String name) {
+        System.out.println("      Test starting: " + name);
+    }
 
-	public void stepStarted(String stimuli, String expectedResult) {
-		System.out.println("\t\t\tStep: "+stimuli);
-	}
-	
-	public void stepEnded() {
-		//System.out.println("\t\t\tStep ended");
-	}
+    @Override
+    public void addDescription(String description) {
+        System.out.println("        Description: " + description);
+    }
 
-	public void onFinish(ITestContext context) {
-		System.out.println("\t\tFinished testcase");
-	}
+    @Override
+    public void addReference(String reference) {
+        System.out.println("        Reference: " + reference);
+    }
 
-	public void onStart(ITestContext context) {
-		System.out.println("\t\tStarting testcase "+context.getName());
-	}
+    @Override
+    public void addFixture(String setupDescription) {
+        System.out.println("        Added fixture: " + setupDescription);
+    }
 
-	public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
-		System.out.println("\t\tTest partial fail: "+result);
-	}
+    @Override
+    public void stepStart(String stimuli, String expectedResult) {
+        System.out.println("        Step: " + stimuli);
+    }
 
-	public void onTestFailure(ITestResult result) {
-		System.out.println("\t\tTest failed: "+result);
-	}
+    @Override
+    public void addStimuli(String stimuli) {
+        System.out.println("          Stimuli: " + stimuli);
+    }
 
-	public void onTestSkipped(ITestResult result) {
-		System.out.println("\t\tTest skipped: "+result);
-	}
+    @Override
+    public void addResult(String result) {
+        System.out.println("          Result: " + result);
+    }
 
-	public void onTestStart(ITestResult result) {
-		System.out.println("\t\tTest starting: "+result.getName());
-	}
+    @Override
+    public void stepEnd() {
+        //System.out.println("      Step ended");
+    }
 
-	public void onTestSuccess(ITestResult result) {
-		System.out.println("\t\tTest success: "+result);		
-	}
+    @Override
+    public void testFailure(ITestResult result) {
+        System.out.println("      Test failed: " + result.getThrowable());
+    }
 
-	public void onStart(ISuite arg0) {
-		System.out.println("\tSuite: "+arg0.getName());		
-	}
-	
-	public void onFinish(ISuite arg0) {
-		System.out.println("\tFinished suite "+arg0.getName());
-	}
+    @Override
+    public void testSuccess(ITestResult result) {
+        System.out.println("      Test success: " + result.getName());
+    }
 
-	public void generateReport(List<XmlSuite> arg0, List<ISuite> arg1,
-			String arg2) {
-		System.out.println("Finished");
-	}
+    @Override
+    public void classFinish() {
+        System.out.println("      Finished testcase");
+    }
 
-//    public void projectStarted(String name) {
-//        System.out.println("Project: "+name);
-//    }
-//
-//    public void suiteStarted(String name) {
-//        System.out.println("\tSuite: "+name);
-//    }
-//
-//    public void caseStarted(String name) {
-//        System.out.println("\t\tCase: "+name);
-//    }
-//
-//    public void testStarted(String name) {
-//        System.out.println("\t\t\tTest: "+name);
-//    }
-//    public void testEnded() {
-//        System.out.println("\t\t\tTest ended: ");
-//    }        
-//    public void testFailed(String message) {
-//        System.out.println("\t\t\tTest failed: "+message);
-//    }
-//    public void testError(String message) {
-//        System.out.println("\t\t\tTest error: "+message);
-//    }
-//
-//    public void stepStarted(String stimuli, String expextedResult) {
-//        System.out.println("\t\t\t\tStep: "+stimuli);
-//    }
-//
-//    public void stepEnded() {
-//        System.out.println("\t\t\t\tStep ended");
-//    }
-//
-//    public void description(String description) {
-//        System.out.println("Description: "+description);
-//    }
-//
-//    public void reference(String reference) {
-//        System.out.println("Reference: "+reference);
-//    }
-//
-//    public void addStimuli(String stimuli) {
-//        System.out.println("Stimuli: "+stimuli);
-//    }
-//
-//    public void addResult(String result) {
-//        System.out.println("Result: "+result);
-//    }
+    @Override
+    public void suiteFinish() {
+        System.out.println("  Finished suite");
+    }
+
+    @Override
+    public void projectFinish() {
+        System.out.println("Finished project");
+    }
 }

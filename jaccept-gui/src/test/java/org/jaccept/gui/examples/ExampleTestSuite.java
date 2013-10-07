@@ -1,20 +1,15 @@
 package org.jaccept.gui.examples;
 
-import javax.swing.JFrame;
-
 import junit.framework.TestSuite;
+import org.jaccept.gui.SwingClient;
 
-import org.jaccept.StdOutLogger;
-import org.jaccept.TestEventManager;
-import org.jaccept.gui.ComponentTestFrame;
+import javax.swing.*;
 
 public class ExampleTestSuite extends TestSuite {
-        
+
     public static void suite() {
-        JFrame hmi = new ComponentTestFrame();
+        JFrame hmi = new SwingClient();
         hmi.pack();
         hmi.setVisible(true);
-
-        TestEventManager.addTestListener(new StdOutLogger());
-    }            
+    }
 }

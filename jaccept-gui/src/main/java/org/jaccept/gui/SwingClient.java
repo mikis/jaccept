@@ -1,49 +1,38 @@
 package org.jaccept.gui;
 
+import org.jaccept.TestEventListener;
+import org.jaccept.TestEventManager;
+import org.testng.ITestResult;
+
+import javax.swing.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.List;
-
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JToggleButton;
-
-import org.jaccept.TestEventListener;
-import org.jaccept.TestEventManager;
-import org.testng.ISuite;
-import org.testng.ITestContext;
-import org.testng.ITestResult;
-import org.testng.xml.XmlSuite;
 
 
-public class ComponentTestFrame extends javax.swing.JFrame {
-//    private final Logger log = Logger.getLogger(ComponentTestFrame.class);
-    private static ComponentTestFrame aInstance;
+public class SwingClient extends javax.swing.JFrame implements TestEventListener {
+    private static SwingClient aInstance;
 
-    /** Creates new form ComponentTestHMI */
-    public ComponentTestFrame() {
+    /**
+     * Creates new form ComponentTestHMI
+     */
+    public SwingClient() {
         initComponents();
         setVisible(true);
-        TestEventManager.addTestListener(new TestListener());
         aInstance = this;
         pack();
         setVisible(true);
     }
-    
+
     private void createStimuliSelector() {
-    	
+
     }
 
     private void initComponents() {
         aResultDescriptionList = new javax.swing.JList();
         aResultDescriptionList.setBorder(new javax.swing.border.EtchedBorder());
-//        aResultDescriptionList.setModel(new ResultDescriptionListModel());
+        aResultDescriptionList.setModel(new ResultDescriptionListModel());
         aResultDescriptionList.setCellRenderer(new DisappearingListRenderer());
         aResultDescriptionList.setFixedCellHeight(15);
         aResultDescriptionList.setToolTipText("List of expected results");
@@ -51,12 +40,12 @@ public class ComponentTestFrame extends javax.swing.JFrame {
         aVerificationRejectButton.setText("Reject");
         aVerificationRejectButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-//                TestEventManager.fail("Result manually rejected");
+//                TestEventManager.getInstance().testFailure("Result manually rejected");
             }
         });
         aVerificationRejectButton.setToolTipText("Rejcts the test result thereby faling the test. (Not implemented)");
         aVerificationRejectButton.setEnabled(false);
-        
+
         aResultPanelClearButton.setText("Clear");
         aResultPanelClearButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -78,7 +67,9 @@ public class ComponentTestFrame extends javax.swing.JFrame {
         aVerificationButtonPanel.add(aVerificationLeftButtonPanel, java.awt.BorderLayout.WEST);
         aVerificationButtonPanel.add(aVerificationRightButtonPanel, java.awt.BorderLayout.EAST);
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        suiteLabel = new javax.swing.JLabel();
+        classLabel = new javax.swing.JLabel();
+        methodLabel = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         aIOPane = new javax.swing.JSplitPane();
         StimuliPanel = new javax.swing.JPanel();
@@ -91,7 +82,7 @@ public class ComponentTestFrame extends javax.swing.JFrame {
         aInputSpeedLabel = new javax.swing.JLabel();
         aSelectorPanel = new javax.swing.JPanel();
         aModeSelector = new javax.swing.JComboBox();
-        
+
         aModeSelector.setToolTipText("Select stimuli mode");
         aSpeedSelector = new javax.swing.JComboBox();
         aSpeedSelector.setToolTipText("<html>Select the speed the stimuli should be applied (Not implemented)</html>");
@@ -130,8 +121,14 @@ public class ComponentTestFrame extends javax.swing.JFrame {
         jPanel1.setLayout(new java.awt.BorderLayout());
 
         jPanel1.setBorder(new javax.swing.border.TitledBorder(""));
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 14));
-        jPanel1.add(jLabel1, java.awt.BorderLayout.CENTER);
+        JPanel contextPanel = new JPanel();
+        contextPanel.add(new JLabel("Suite: "));
+        contextPanel.add(suiteLabel);
+        contextPanel.add(new JLabel("Class: "));
+        contextPanel.add(classLabel);
+        contextPanel.add(new JLabel("Test: "));
+        contextPanel.add(methodLabel);
+        jPanel1.add(contextPanel, java.awt.BorderLayout.WEST);
 
         jLabel2.setPreferredSize(new java.awt.Dimension(50, 16));
         jPanel1.add(jLabel2, java.awt.BorderLayout.EAST);
@@ -171,12 +168,12 @@ public class ComponentTestFrame extends javax.swing.JFrame {
         aSelectorPanel.setLayout(new java.awt.GridLayout(2, 0, 0, 5));
 
         aSelectorPanel.setBorder(new javax.swing.border.EmptyBorder(new java.awt.Insets(5, 5, 5, 5)));
-        aModeSelector.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Auto", "Manual" }));
+        aModeSelector.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Auto", "Manual"}));
         aModeSelector.setSelectedItem("Manual");
         TestEventManager.getInstance().getTestState().setBlocking(true);
         aSelectorPanel.add(aModeSelector);
 
-        aSpeedSelector.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "None", "2 seconds", "5 seconds", "10 seconds" }));
+        aSpeedSelector.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"None", "2 seconds", "5 seconds", "10 seconds"}));
         aSelectorPanel.add(aSpeedSelector);
 
         jPanel2.add(aSelectorPanel, java.awt.BorderLayout.CENTER);
@@ -214,7 +211,7 @@ public class ComponentTestFrame extends javax.swing.JFrame {
         aVerificationModePane.setBorder(new javax.swing.border.EmptyBorder(new java.awt.Insets(5, 5, 5, 5)));
         aInputModeLabel1.setText("Mode    ");
         aVerificationModePane.add(aInputModeLabel1, java.awt.BorderLayout.WEST);
-        
+
         aVerificationModePane.add(aModeSelector2, java.awt.BorderLayout.CENTER);
 
         aVerificationSettingPane.add(aVerificationModePane, java.awt.BorderLayout.NORTH);
@@ -263,14 +260,14 @@ public class ComponentTestFrame extends javax.swing.JFrame {
         jMenuBar1.add(aToolMenu);
 
         setJMenuBar(jMenuBar1);
-        setBounds(new java.awt.Rectangle(0,0,846,510));
+        setBounds(new java.awt.Rectangle(0, 0, 846, 510));
         pack();
         aVerificationRightButtonPanel.add(aVerificationAcceptButton);
         aVerificationRightButtonPanel.add(aVerificationRejectButton);
         enableManualAccept(false);
         aResultPanelClearButton.setToolTipText("Clear Resultpanel");
-        aResultPanelClearButton.addMouseListener(new MouseAdapter(){
-            public void mouseClicked(MouseEvent e){
+        aResultPanelClearButton.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
                 aResultPanelClearButtonMouseClicked(e);
             }
         });
@@ -285,156 +282,122 @@ public class ComponentTestFrame extends javax.swing.JFrame {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
 //                    stimuliList.setLineWrap(true);
                     jTextArea2.setLineWrap(true);
-                }
-                else  {
+                } else {
 //                    stimuliList.setLineWrap(false);
                     jTextArea2.setLineWrap(false);
                 }
             }
         });
-    }//GEN-END:initComponents
+    }
 
-    /** Exit the Application */
+    /**
+     * Exit the Application
+     */
     private void exitForm(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_exitForm
         System.exit(0);
-    }//GEN-LAST:event_exitForm
+    }
 
     private synchronized void aAcceptButtonMouseClicked() {
         TestEventManager.unblock();
     }
 
-    public void aResultPanelClearButtonMouseClicked(MouseEvent e) { }
+    public void aResultPanelClearButtonMouseClicked(MouseEvent e) {
+    }
 
-    public void enableManualAccept(boolean enable){
+    public void enableManualAccept(boolean enable) {
         aVerificationAcceptButton.setEnabled(enable);
         aVerificationRejectButton.setEnabled(enable);
     }
 
-    private class TestListener implements TestEventListener{
-        private int aStepCounter = 0;
-        private String description;  
+    private int aStepCounter = 0;
+    private String description;
 
-        public void projectStarted(String name) {
-        }
+    @Override
+    public void projectStart(String name) {
+    }
 
-        public void suiteStarted(String name) {
-        }
+    @Override
+    public void suiteStart(String name) {
+        suiteLabel.setText(name);
+    }
 
+    @Override
+    public void classStart(String name) {
+        aStepCounter = 0;
+        classLabel.setText(name);
+    }
 
-        public void caseStarted(String name) {
-            aStepCounter = 0;
-            jLabel1.setText(name);
-            JOptionPane.showMessageDialog(aInstance, name+"\n"+description, "Run suite", JOptionPane.PLAIN_MESSAGE);        
-        }
+    @Override
+    public void testStart(String name) {
+        aStepCounter = 0;
+        methodLabel.setText(name);
+        stimuliList.removeAll();
+        jTextArea2.removeAll();
+    }
 
-        public void testStarted(String name) {  }
+    @Override
+    public void stepStart(String stimuli, String expectedResult) {
+        aStepCounter++;
+        jLabel2.setText("Step " + aStepCounter);
+        stimuliListModel.addElement("\nStep " + aStepCounter + "\n");
+        jTextArea2.append("\nStep " + aStepCounter + "\n");
+        enableManualAccept(false);
+    }
 
-        public void stepStarted(String stimuli, String expectedResult) {
-            aStepCounter++;
-            jLabel2.setText("Step "+aStepCounter);
-            stimuliListModel.addElement("\nStep "+aStepCounter+"\n");
-            jTextArea2.append("\nStep "+aStepCounter+"\n");
-            enableManualAccept(false);
-        }
+    @Override
+    public void addStimuli(String stimuli) {
+        stimuliListModel.addElement(stimuli + "\n");
+        stimuliList.ensureIndexIsVisible(stimuliListModel.getSize() - 1);
+    }
 
-        public void addStimuli(String stimuli) {
-            stimuliListModel.addElement(stimuli+"\n");
-            stimuliList.ensureIndexIsVisible(stimuliListModel.getSize()-1);
-        }
+    @Override
+    public void addResult(String result) {
+        jTextArea2.append(result + "\n");
+    }
 
-        public void addResult(String result) {
-            jTextArea2.append(result+"\n");
-        }
+    public void addNotification(String result) {
+        jTextArea2.append(result + "\n");
+    }
 
-        public void addTestSpecific(String awaittype) {
-        }
+    @Override
+    public void addReference(String reference) {}
 
-        public void addNotification(String result) {
-            jTextArea2.append(result+"\n");
-        }
+    @Override
+    public void addDescription(String description) {
+        this.description = description;
+    }
 
-        public void reference(String reference) {
-            
-        }
+    @Override
+    public void addFixture(String name) {
+        jLabel2.setText("Initialising test");
+    }
 
-        public void description(String description) {
-        	this.description = description;
-        }
-        public void addPurpose(String name) {
-        }
+    @Override
+    public void classFinish() {
+        enableManualAccept(false);
+        jLabel2.setText("Finishing test");
+    }
 
-        public void addNotPerformed() {
-        }
+    @Override
+    public void stepEnd() {
+        enableManualAccept(true);
+        TestEventManager.getInstance().block();
+    }
 
-        public void addSetUp(String name) {
-            jLabel2.setText("Initialising test");
-        }
+    @Override
+    public void testSuccess(ITestResult result) {
+    }
 
-        public void addTearDown(String tearDownAction) {
-            enableManualAccept(false);
-            jLabel2.setText("Finishing test");
-        }
+    @Override
+    public void testFailure(ITestResult result) {
+    }
 
-        public void testError(String message) {
-        }
+    @Override
+    public void suiteFinish() {
+    }
 
-        public void addWarn(String message) {
-        }
-
-        public void stepEnded() {
-            enableManualAccept(true);
-            TestEventManager.getInstance().block();
-        }
-
-        public void testEnded() {
-            enableManualAccept(true);
-        }
-
-        public void testFailed(String message) {
-        }
-
-		public void onFinish(ITestContext arg0) {
-		}
-
-		public void onStart(ITestContext arg0) {
-		}
-
-		public void onTestFailedButWithinSuccessPercentage(ITestResult arg0) {
-		}
-
-		public void onTestFailure(ITestResult arg0) {
-		}
-
-		public void onTestSkipped(ITestResult arg0) {
-		}
-
-		public void onTestStart(ITestResult arg0) {
-            aStepCounter = 0;
-            jLabel1.setText(arg0.getName());
-            stimuliList.removeAll();
-            jTextArea2.removeAll();
-            if (TestEventManager.getInstance().getTestState().getBlocking()) JOptionPane.showMessageDialog(aInstance, arg0.getName()+"\n"+description, "Run test", JOptionPane.PLAIN_MESSAGE);
-      
-		}
-
-		public void onTestSuccess(ITestResult arg0) {
-		}
-
-		public void onFinish(ISuite arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		public void onStart(ISuite arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		public void generateReport(List<XmlSuite> arg0, List<ISuite> arg1,
-				String arg2) {
-			// TODO Auto-generated method stub
-			
-		}
+    @Override
+    public void projectFinish() {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -467,14 +430,16 @@ public class ComponentTestFrame extends javax.swing.JFrame {
     private javax.swing.JPanel aVerificationSettingPane;
     private JButton aVerificationAcceptButton;
     private JButton aVerificationRejectButton;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel suiteLabel;
+    private javax.swing.JLabel classLabel;
+    private javax.swing.JLabel methodLabel;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private JScrollPane jTextAreaScroolPane1;
-    private javax.swing.JList  stimuliList;
-    private DefaultListModel  stimuliListModel;
+    private javax.swing.JList stimuliList;
+    private DefaultListModel stimuliListModel;
     private JScrollPane jTextAreaScroolPane2;
     private javax.swing.JTextArea jTextArea2;
     private JPanel aVerificationButtonPanel = new JPanel();

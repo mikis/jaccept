@@ -1,10 +1,10 @@
 <suite name="Suite1" verbose="1">
-	<test name="Full">
-		<packages>
-			<package name="org.jaccept.examples" />
-		</packages>
-	</test>
-	<listeners>
-		<!--listener class-name="org.jaccept.TestNGListerner" /Already added in pom-->
-	</listeners>
+  <test name="Full">
+    <packages>
+      <package name="org.jaccept.examples"/>
+    </packages>
+  </test>
+  <listeners>
+    <!--listener class-name="org.jaccept.TestNGListerner" /Already added in pom-->
+  </listeners>
 </suite>

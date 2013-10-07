@@ -1,55 +1,63 @@
 package org.jaccept;
 
-import java.util.List;
-
-import org.testng.IReporter;
-import org.testng.ISuite;
-import org.testng.ISuiteListener;
-import org.testng.ITestContext;
-import org.testng.ITestListener;
-import org.testng.ITestResult;
+import org.testng.*;
 import org.testng.xml.XmlSuite;
 
-public class TestNGListerner implements ITestListener, ISuiteListener, IReporter {
-	public static final TestEventManager tm = TestEventManager.getInstance();
+import java.util.List;
 
-	public void onFinish(ITestContext arg0) {
-		tm.onFinish(arg0);
-	}
+public class TestNGListerner implements ITestListener, ISuiteListener, IExecutionListener {
+    public static TestEventManager tm;
 
-	public void onStart(ITestContext arg0) {
-		tm.onStart(arg0);
-	}
+    @Override
+    public void onStart(ISuite arg0) {
+        tm.suiteStart(arg0.getName());
+    }
 
-	public void onTestFailedButWithinSuccessPercentage(ITestResult arg0) {
-		tm.onTestFailedButWithinSuccessPercentage(arg0);
-	}
+    @Override
+    public void onStart(ITestContext arg0) {
+    }
 
-	public void onTestFailure(ITestResult arg0) {
-		tm.onTestFailure(arg0);
-	}
+    @Override
+    public void onTestStart(ITestResult arg0) {
+        tm.testStart(arg0.getName());
+    }
 
-	public void onTestSkipped(ITestResult arg0) {
-		tm.onTestSkipped(arg0);
-	}
+    @Override
+    public void onTestSuccess(ITestResult arg0) {
+        tm.testSuccess(arg0);
+    }
 
-	public void onTestStart(ITestResult arg0) {
-		tm.onTestStart(arg0);
-	}
+    @Override
+    public void onTestFailure(ITestResult arg0) {
+        tm.testFailure(arg0);
+    }
 
-	public void onTestSuccess(ITestResult arg0) {
-		tm.onTestSuccess(arg0);
-	}
+    @Override
+    public void onFinish(ITestContext arg0) {
+        tm.classFinish();
+    }
 
-	public void onFinish(ISuite arg0) {
-		tm.onFinish(arg0);
-	}
+    @Override
+    public void onTestFailedButWithinSuccessPercentage(ITestResult arg0) {
+    }
 
-	public void onStart(ISuite arg0) {
-		tm.onStart(arg0);
-	}
+    @Override
+    public void onTestSkipped(ITestResult arg0) {
+    }
 
-	public void generateReport(List<XmlSuite> arg0, List<ISuite> arg1, String arg2) {
-		tm.generateReport(arg0, arg1, arg2);		
-	}
+    @Override
+    public void onFinish(ISuite arg0) {
+        tm.suiteFinish();
+    }
+
+    @Override
+    public void onExecutionStart() {
+        tm = TestEventManager.getInstance();
+        tm.projectStart();
+    }
+
+    @Override
+    public void onExecutionFinish() {
+        tm.projectFinish();
+    }
 }
