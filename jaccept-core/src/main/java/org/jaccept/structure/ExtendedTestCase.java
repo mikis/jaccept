@@ -2,8 +2,8 @@ package org.jaccept.structure;
 
 import org.jaccept.TestEventManager;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Listeners;
 
-//@Listeners({org.jaccept.TestNGListerner.class})
 public abstract class ExtendedTestCase {
     private static final TestEventManager testEventManager = TestEventManager.getInstance();
 

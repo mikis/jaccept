@@ -1,0 +1,7 @@
+<suite name="Suite2" verbose="1">
+  <test name="Just a single class">
+    <classes>
+      <class name="org.jaccept.examples.SecondIT"/>
+    </classes>
+  </test>
+</suite>

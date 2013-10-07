@@ -5,7 +5,7 @@ import org.testng.xml.XmlSuite;
 
 import java.util.List;
 
-public class TestNGListerner implements ITestListener, ISuiteListener, IExecutionListener {
+public class TestNGListener implements ITestListener, ISuiteListener, IExecutionListener {
     public static TestEventManager tm;
 
     @Override

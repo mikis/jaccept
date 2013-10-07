@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.apache.log4j.helpers.Loader;
 import org.testng.ITestResult;
+import org.testng.annotations.Listeners;
 
 import java.io.IOException;
 import java.net.URL;
@@ -14,7 +15,8 @@ public class TestEventManager {
     private static final TestEventManager instance = new TestEventManager();
     private final Logger log = Logger.getLogger(TestEventManager.class);
     private final TestState testState = new TestState();
-    private final Properties jacceptProperties = new Properties();;
+    private final Properties jacceptProperties = new Properties();
+    private boolean initialized = false;
 
     private TestEventManager() {
         URL url = Loader.getResource("log4j.xml");
