@@ -138,6 +138,7 @@ public class ReportGenerator implements TestEventListener {
 
     @Override
     public void addFixture(String setupDescription) {
+        if (currentTest == null) return;// Test not started yet
         stepStart(setupDescription, "");
     }
 
