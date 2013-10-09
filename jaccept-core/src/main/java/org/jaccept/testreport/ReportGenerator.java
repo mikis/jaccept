@@ -106,6 +106,10 @@ public class ReportGenerator implements TestEventListener {
 
     @Override
     public void testFailure(ITestResult result) {
+        if(currentTest == null) {
+            log.warn("Failure before test, " +result.getThrowable().getLocalizedMessage());
+            return;
+        }
         if (currentStep != null) {
             currentStep.setAttribute("outcome", "&divide;");
         }
@@ -183,9 +187,7 @@ public class ReportGenerator implements TestEventListener {
 
     private Element simpleAppend(Element parent, String kind, String name) {
         if (parent == null) {
-            throw new IllegalStateException
-                    ("Exception in Projects: " +
-                            "No parent in hierarchy for " + kind);
+            throw new IllegalStateException("No parent in hierarchy for " + kind);
         }
         Element child = doc.createElement(kind);
         if (name != null && !name.equals("")) child.setAttribute("name", name);
@@ -207,10 +209,12 @@ public class ReportGenerator implements TestEventListener {
     }
 
     public void addStimuli(String stimuli) {
+        if (currentStep == null) return;// Test not started yet
         simpleAppend(currentStep, "stimuli", stimuli);
     }
 
     public void addResult(String result) {
+        if (currentStep == null) return;// Test not started yet
         simpleAppend(currentStep, "result", result);
     }
 

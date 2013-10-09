@@ -7,7 +7,7 @@ import org.testng.annotations.Listeners;
 public abstract class ExtendedTestCase {
     private static final TestEventManager testEventManager = TestEventManager.getInstance();
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void registerTest() {
         testEventManager.classStart(this.getClass().getSimpleName());
     }

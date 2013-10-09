@@ -1,5 +1,10 @@
 <suite name="Suite1" verbose="1">
   <test name="Full">
+    <groups>
+      <run>
+        <include name="regressiontest"/>
+      </run>
+    </groups>
     <packages>
       <package name="org.jaccept.examples"/>
     </packages>

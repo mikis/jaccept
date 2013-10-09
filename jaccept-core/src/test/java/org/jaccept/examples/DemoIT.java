@@ -10,7 +10,7 @@ import static org.testng.AssertJUnit.fail;
 public class DemoIT extends ExtendedTestCase {
     ExampleComponentWrapper c2t = new ExampleComponentWrapper(new ExampleComponent());
 
-    @Test
+    @Test( groups = {"regressiontest"})
     public void testFirstMethod() {
         addDescription("Test level description test 1");
 
