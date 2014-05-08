@@ -1,29 +1,30 @@
 package org.jaccept.testreport;
 
-import org.apache.log4j.Logger;
-import org.apache.log4j.helpers.Loader;
-import org.jaccept.TestEventListener;
-import org.testng.ISuite;
-import org.testng.ITestContext;
-import org.testng.ITestResult;
-import org.testng.xml.XmlSuite;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.*;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.List;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+
+import org.apache.log4j.Logger;
+import org.apache.log4j.helpers.Loader;
+import org.jaccept.TestEventListener;
+import org.testng.ISuite;
+import org.testng.ITestResult;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 
 public class ReportGenerator implements TestEventListener {
@@ -35,7 +36,6 @@ public class ReportGenerator implements TestEventListener {
     private static File testreportFile = new File("target" + File.separator + "" + "jaccept-testreport.html");
     private static File xmlReportFile = new File("target" + File.separator + "" + "jaccept-testreport.xml");
 
-    private static final boolean debug = true;
     private static int step = 0;
 
     private Document doc;
@@ -159,7 +159,7 @@ public class ReportGenerator implements TestEventListener {
 
     @Override
     public void projectFinish() {
-        if (debug) System.out.println("Generating test reports .... ");
+        log.debug("Generating test reports .... ");
         try {
             Transformer transformer = TransformerFactory.newInstance().newTransformer(new StreamSource(styleSheet));
             transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
@@ -173,7 +173,7 @@ public class ReportGenerator implements TestEventListener {
 
             for (int i = 0; i < projects.getLength(); i++) {
                 name = ((Element) projects.item(i)).getAttribute("name");
-                if (debug) System.out.println("Generating project at : " + testreportFile.getAbsoluteFile());
+                log.debug("Generating project at : " + testreportFile.getAbsoluteFile());
                 Source source = new DOMSource(projects.item(i));
                 Result result = new StreamResult(testreportFile);
                 transformer.transform(source, result);
@@ -181,8 +181,8 @@ public class ReportGenerator implements TestEventListener {
 
                 identityTransformer.transform(source, new StreamResult(xmlReportFile));
             }
-        } catch (TransformerException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            log.error("Unable to generate report," + e.getMessage());
         }
     }
 
